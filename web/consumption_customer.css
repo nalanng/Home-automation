@@ -1,0 +1,631 @@
+* {
+  margin: 0;
+}
+main {
+  position: relative;
+  height: 90vh;
+  background-color: #60555e;
+  display: block;
+  background-size: cover;
+}
+header {
+  position: relative;
+  height: 10vh;
+  background-color: #000;
+  border-bottom: 1px solid rgb(42, 37, 46);
+}
+
+nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5vh;
+  width: 100%;
+}
+.log-out {
+  position: absolute;
+  background-color: #e7bdbd;
+  right: 3%;
+  transform: translateX(-100%);
+  font-size: large;
+  border-radius: 5px;
+  padding: 2px;
+  text-decoration: none;
+  color: black;
+}
+.logo {
+  position: absolute;
+  left: 0;
+  background-color: #fff;
+  transform: translateY(-50%);
+}
+
+.row1 {
+  position: absolute;
+  height: 90%;
+  width: 55%;
+  margin-top: 2%;
+}
+.row2 {
+  position: absolute;
+  height: 90%;
+  width: 40%;
+  right: 0%;
+  top: 8%;
+  border-radius: 2%;
+}
+
+.r1-col1 {
+  position: absolute;
+  background-color: #a60290;
+  height: 54%;
+  width: 95%;
+  border-radius: 2%;
+}
+
+.r1-col1 h1 {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 70%;
+  text-align: center;
+  font-size: 170%;
+  left: 15%;
+  top: 5%;
+  border-bottom: 3px solid black;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.navbar {
+  background-color: #ea5dfc;
+  position: absolute;
+  width: 100%;
+  bottom: 40%;
+  font-size: 130%;
+  right: 4%;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.navbar li {
+  color: #000;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  font-size: 120%;
+}
+
+.r1-col2 {
+  position: absolute;
+  height: 37%;
+  width: 95%;
+  bottom: 0%;
+  border-radius: 2%;
+}
+
+.r1-col2-1 {
+  position: absolute;
+  background-color: #a60290;
+  width: 47%;
+  height: 100%;
+  right: 0;
+  border-radius: 2%;
+}
+
+.r1-col2-1 a {
+  position: absolute;
+  color: #000;
+  text-align: center;
+  font-size: x-large;
+  text-decoration: none;
+  padding: 30px;
+  border: 3px solid black;
+  margin-left: 1%;
+  margin-top: 17%;
+  font-style: italic;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.r1-col2-2 {
+  position: absolute;
+  background-color: #a60290;
+  width: 47%;
+  height: 100%;
+  border-radius: 2%;
+}
+
+.r1-col2-2 p {
+  position: absolute;
+  text-align: center;
+  font-size: 200%;
+  background-color: grey;
+  padding: 5% 19%;
+  border-radius: 2%;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+button {
+  position: absolute;
+  width: 50%;
+  height: 30%;
+  border-radius: 35px;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  bottom: -12%;
+  left: 50%;
+  margin-bottom: 3%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.5s;
+}
+button span {
+  display: block;
+  background-color: #999;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  margin-left: 2px;
+  transition: margin-left 0.5s;
+}
+
+.active {
+  background-color: green;
+}
+.active span {
+  background-color: #999;
+  margin-left: 130px;
+}
+
+.row2 #p1 {
+  color: black;
+  text-align: center;
+  width: 60%;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-size: 170%;
+  margin-left: 20%;
+  border-bottom: 2px solid black;
+}
+.row2 #p2 {
+  margin-left: 25%;
+  text-align: center;
+  width: 50%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  height: 0%;
+  border-radius: 50%;
+  background-color: green;
+  font-size: 140%;
+  border: 2px solid black;
+  margin-top: 2%;
+}
+
+#devices-info-2 #p2 {
+  background-color: green;
+  height: 60%;
+}
+#devices-info-3 #p2 {
+  background-color: red;
+  height: 60%;
+}
+#devices-info-1 #p2 {
+  background-color: green;
+}
+
+/* We made changes using 
+'@media' to prevent layout issues on the page
+ at specific pixel intervals.
+
+ Additionally, this also helped us 
+ achieve a more seamless mobile view.
+ */
+@media (max-width: 1300px) {
+  main {
+    height: 1500px;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 250px;
+  }
+  .row1 {
+    position: absolute;
+    height: 1200px;
+    width: 100%;
+    left: 3%;
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 100%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col1 {
+    height: 30%;
+  }
+  .r1-col2 {
+    top: 30%;
+  }
+  .r1-col2-1 {
+    width: 90%;
+    height: 40%;
+    top: 60%;
+    left: 5%;
+  }
+  .r1-col2-1 a {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 57%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col2-2 {
+    width: 90%;
+    height: 40%;
+    top: 10%;
+    left: 5%;
+  }
+  .r1-col2-2 p {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+  .navbar li {
+    padding-bottom: 10px;
+    padding-left: 2%;
+    width: 90%;
+  }
+  button {
+    padding: 0;
+    margin: 0;
+    width: 28%;
+  }
+}
+
+@media (max-width: 1000px) {
+  main {
+    height: 1500px;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 170px;
+  }
+  .row1 {
+    position: absolute;
+    height: 1200px;
+    width: 100%;
+    left: 3%;
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 100%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col1 {
+    height: 30%;
+  }
+  .r1-col2 {
+    top: 30%;
+  }
+  .r1-col2-1 {
+    width: 90%;
+    height: 40%;
+    top: 60%;
+    left: 5%;
+  }
+  .r1-col2-1 a {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 57%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col2-2 {
+    width: 90%;
+    height: 40%;
+    top: 10%;
+    left: 5%;
+  }
+  .r1-col2-2 p {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+  .navbar li {
+    padding-bottom: 10px;
+    padding-left: 2%;
+    width: 90%;
+  }
+  button {
+    padding: 0;
+    margin: 0;
+    width: 28%;
+  }
+}
+@media (max-width: 900px) {
+  main {
+    height: 1500px;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 150px;
+  }
+  .row1 {
+    position: absolute;
+    height: 1200px;
+    width: 100%;
+    left: 3%;
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 100%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col1 {
+    height: 30%;
+  }
+  .r1-col2 {
+    top: 30%;
+  }
+  .r1-col2-1 {
+    width: 90%;
+    height: 40%;
+    top: 60%;
+    left: 5%;
+  }
+  .r1-col2-1 a {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 57%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col2-2 {
+    width: 90%;
+    height: 40%;
+    top: 10%;
+    left: 5%;
+  }
+  .r1-col2-2 p {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+  .navbar li {
+    padding-bottom: 10px;
+    padding-left: 2%;
+    width: 90%;
+  }
+  button {
+    padding: 0;
+    margin: 0;
+    width: 28%;
+  }
+}
+@media (max-width: 800px) {
+  main {
+    height: 1500px;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 130px;
+  }
+  .row1 {
+    position: absolute;
+    height: 1200px;
+    width: 100%;
+    left: 3%;
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 100%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col1 {
+    height: 30%;
+  }
+  .r1-col2 {
+    top: 30%;
+  }
+  .r1-col2-1 {
+    width: 90%;
+    height: 40%;
+    top: 60%;
+    left: 5%;
+  }
+  .r1-col2-1 a {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 57%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col2-2 {
+    width: 90%;
+    height: 40%;
+    top: 10%;
+    left: 5%;
+  }
+  .r1-col2-2 p {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+  .navbar li {
+    padding-bottom: 10px;
+    padding-left: 2%;
+    width: 90%;
+  }
+  button {
+    padding: 0;
+    margin: 0;
+    width: 28%;
+  }
+}
+@media (max-width: 450px) {
+  .navbar li {
+    padding-bottom: 10px;
+    width: 80%;
+    padding-left: 2%;
+    font-size: medium;
+  }
+  .row1 h1 {
+    padding: 0;
+    margin: 0;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 50px;
+  }
+}
+@media (max-width: 600px) {
+  main {
+    height: 1500px;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 85px;
+  }
+  .row1 {
+    position: absolute;
+    height: 1200px;
+    width: 100%;
+    left: 3%;
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 100%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col1 {
+    height: 30%;
+  }
+  .r1-col2 {
+    top: 30%;
+  }
+  .r1-col2-1 {
+    width: 90%;
+    height: 40%;
+    top: 60%;
+    left: 5%;
+  }
+  .r1-col2-1 a {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .row2 {
+    width: 102%;
+    height: 45%;
+    top: 57%;
+    background-color: #60555e;
+    border-radius: 0;
+  }
+  .r1-col2-2 {
+    width: 90%;
+    height: 40%;
+    top: 10%;
+    left: 5%;
+  }
+  .r1-col2-2 p {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+  .navbar li {
+    padding-bottom: 10px;
+    padding-left: 2%;
+    width: 90%;
+  }
+  button {
+    padding: 0;
+    margin: 0;
+    width: 28%;
+  }
+}
+@media (max-width: 450px) {
+  .navbar li {
+    padding-bottom: 10px;
+    width: 80%;
+    padding-left: 2%;
+    font-size: medium;
+  }
+  .row1 h1 {
+    padding: 0;
+    margin: 0;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 50px;
+  }
+}
+@media (max-width: 300px) {
+  .navbar li {
+    padding-bottom: 10px;
+    width: 80%;
+    padding-left: 2%;
+    font-size: medium;
+  }
+  .row1 h1 {
+    padding: 0;
+    margin: 0;
+  }
+  .active span {
+    background-color: #999;
+    margin-left: 20px;
+  }
+}

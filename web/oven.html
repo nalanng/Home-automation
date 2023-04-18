@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="oven.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Clicking on the logo lead you to the home page -->
+        <a class="logo" href="homepage_customer.html"
+          ><img src="images/logo.png" alt=""
+        /></a>
+        <!-- Log Out will lead you to the login page -->
+        <a class="log-out" href="login-customer.php">Log Out</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="account-info">
+        <div id="profil-foto">
+          <img src="images/profil-foto.jpeg" alt="" />
+          <!-- In this devices section we can go through 
+            all of the devices that consumer have -->
+          <select name="devices" id="devices-b" onchange="location=this.value">
+            <option value="none" id="word-de" selected disabled hidden>
+              Devices
+            </option>
+            <option value="airconditioner.html">Air Conditioner</option>
+            <option value="lights.html">Blinds</option>
+            <option value="vacuum.html">Robotic vacuum cleaner</option>
+            <option value="oven.html">Oven</option>
+            <option value="alarmn-system.html">Security System</option>
+            <option value="thermostat.html">Thermostat</option>
+          </select>
+          <!-- This consumption will let consumer go through monthly consumptions -->
+          <select
+            name="Consumption"
+            id="consumption-b"
+            onchange="location=this.value"
+          >
+            <option value="none" id="word-de" selected disabled hidden>
+              Monthly Consumptions
+            </option>
+            <option value="consumption_customer.html">Mar 2022</option>
+            <option value="consumption_customer.html">Apr 2022</option>
+            <option value="consumption_customer.html">May 2022</option>
+            <option value="consumption_customer.html">Jun 2022</option>
+            <option value="consumption_customer.html">July 2022</option>
+            <option value="consumption_customer.html">Sep 2022</option>
+            <option value="consumption_customer.html">Oct 2022</option>
+            <option value="consumption_customer.html">Nov 2022</option>
+          </select>
+        </div>
+      </section>
+      <section class="outer-info">
+        <section class="info">
+          <div class="col1">
+            <div class="c1-row1">
+              <img src="images/ovenicon.png" alt="" />
+            </div>
+            <div class="c1-row2">
+              <!-- This button will provide user to turn on/off the oven -->
+              <button id="button" onclick="turnOff(button),toggleBtn()">
+                TURN ON
+              </button>
+            </div>
+          </div>
+          <div class="col2">
+            <div class="c2-row1">
+              <p>
+                "Oven will be turned on <br />
+                with the selections <br />
+                you clicked"
+              </p>
+            </div>
+            <div class="c2-row2">
+              <!-- In this section consumer can change the program of the oven  -->
+              <select name="programs" id="programs">
+                <option value="none" selected disabled hidden>
+                  Select a program
+                </option>
+                <option value="program1">Lower heat</option>
+                <option value="program2">Upper heat</option>
+                <option value="program3">Upper and lower heat</option>
+                <option value="program4">Fan with lower heat</option>
+                <option value="program5">Fan oven</option>
+                <option value="program6">Grill</option>
+              </select>
+            </div>
+            <div class="c2-row3">
+              <!-- In this section consumer can change the degree of the oven  -->
+              <select name="degree" id="degree">
+                <option value="none" selected disabled hidden>
+                  Select a degree
+                </option>
+                <option value="degree1">75°C</option>
+                <option value="degree2">100°C</option>
+                <option value="degree3">150°C</option>
+                <option value="degree4">200°C</option>
+                <option value="degree5">250°C</option>
+              </select>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      // Here we get our variables by their id's to use in the functions
+      var btn = document.getElementById("button");
+      // Toggle function is used to change the background-color of the button
+      function toggleBtn() {
+        btn.classList.toggle("active");
+      }
+      // This function simply changes the text of the button when clicked on it
+      function turnOff(id) {
+        if (id.innerHTML == "TURN ON") {
+          id.innerHTML = "TURN OFF";
+        } else {
+          id.innerHTML = "TURN ON";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,261 @@
+* {
+  margin: 0;
+}
+header {
+  position: relative;
+  height: 10vh;
+  background-color: #000;
+  border-bottom: 1px solid rgb(42, 37, 46);
+}
+body {
+  background-color: #f0ece2;
+}
+nav {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5vh;
+  width: 100%;
+}
+a.sign-up {
+  position: absolute;
+  background-color: #e7bdbd;
+  right: 3%;
+  transform: translateX(-100%);
+  font-size: large;
+  border-radius: 5px;
+}
+.logo {
+  position: absolute;
+  left: 0;
+  background-color: #fff;
+  transform: translateY(-50%);
+}
+main {
+  position: relative;
+  height: 90vh;
+  background-size: cover;
+}
+.account-info {
+  position: absolute;
+  left: 5%;
+  width: 30%;
+  background-color: rgb(195, 195, 212);
+  height: 100%;
+}
+.devices-info {
+  position: absolute;
+  left: 40%;
+  width: 55%;
+  background-color: rgb(203, 156, 122);
+  height: 100%;
+}
+#profil-foto img {
+  position: absolute;
+  top: 10%;
+  height: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: aqua;
+  border-radius: 50%;
+}
+.account-info #p1 {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+}
+.account-info #p2 {
+  position: absolute;
+  top: 60%;
+  width: 100%;
+  text-align: center;
+}
+.account-info #p3 {
+  position: absolute;
+  top: 75%;
+  width: 100%;
+  text-align: center;
+}
+.devices-info #devices-b {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  height: 10%;
+  width: 60%;
+  transform: translateX(-50%);
+  z-index: 1;
+  background-color: #f0ece2;
+}
+.devices-info #consumption-b {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0ece2;
+  height: 10%;
+  width: 60%;
+}
+.devices-info div {
+  position: absolute;
+  top: 55%;
+  height: 35%;
+  width: 30%;
+}
+.devices-info #p1 {
+  position: absolute;
+  width: 90%;
+  text-align: center;
+  padding-bottom: 6px;
+  border-bottom: 2px solid black;
+  font-size: x-large;
+}
+.devices-info #p2 {
+  position: absolute;
+  top: 65%;
+  width: 90%;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 50%;
+  height: 30%;
+}
+#devices-info-1 {
+  position: absolute;
+  left: 5%;
+}
+#devices-info-2 {
+  position: absolute;
+  left: 36.5%;
+}
+#devices-info-3 {
+  position: absolute;
+  left: 67.5%;
+}
+#devices-info-1 #p2 {
+  background-color: green;
+  font-size: x-large;
+}
+#devices-info-2 #p2 {
+  background-color: green;
+  font-size: x-large;
+}
+#devices-info-3 #p2 {
+  background-color: red;
+  font-size: x-large;
+}
+/* We made changes using '@media' to prevent layout issues on the page at specific pixel intervals. */
+
+/* We made changes using '@media' to prevent layout issues on the page at specific pixel intervals. */
+
+@media (max-width: 900px) and (min-width: 600px) {
+  section.account-info {
+    position: absolute;
+    height: 30%;
+    left: -0%;
+    background-color: rgb(195, 195, 212);
+    width: 100%;
+  }
+
+  section.devices-info {
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    height: 60%;
+    bottom: 0;
+  }
+  #devices-info-1 #p2 {
+    background-color: green;
+    font-size: large;
+  }
+  #devices-info-2 #p2 {
+    background-color: green;
+    font-size: large;
+  }
+  #devices-info-3 #p2 {
+    background-color: red;
+    font-size: large;
+  }
+}
+@media (max-width: 600px) {
+  section.account-info {
+    position: absolute;
+    height: 40%;
+    left: -0%;
+    background-color: rgb(195, 195, 212);
+    width: 100%;
+  }
+
+  section.devices-info {
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    top: 50%;
+    height: 1200px;
+    bottom: 0;
+  }
+  #devices-info-1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 28%;
+  }
+  #devices-info-2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+  }
+  #devices-info-3 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 72%;
+  }
+  .devices-info #p2 {
+    position: absolute;
+    top: 25%;
+    width: 200px;
+    left: -50px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 40%;
+    height: 20%;
+  }
+  #devices-info-1 #p2 {
+    background-color: green;
+    font-size: x-large;
+    top: 28%;
+  }
+  #devices-info-2 #p2 {
+    background-color: green;
+    font-size: x-large;
+  }
+  #devices-info-3 #p2 {
+    background-color: red;
+    font-size: x-large;
+  }
+  .devices-info #p1 {
+    position: absolute;
+    width: 200px;
+    left: -40%;
+    border-bottom: 2px solid black;
+    font-size: x-large;
+  }
+  .devices-info #devices-b {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    height: 5%;
+    width: 60%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+  .devices-info #consumption-b {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 5%;
+    width: 60%;
+  }
+}

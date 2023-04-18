@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="vacuum.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Clicking on the logo lead you to the home page -->
+        <a class="logo" href="homepage_customer.html"
+          ><img src="images/logo.png" alt=""
+        /></a>
+        <!-- Log Out will lead you to the login page -->
+        <a class="log-out" href="login-customer.php">Log Out</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="account-info">
+        <div id="profil-foto">
+          <img src="images/profil-foto.jpeg" alt="" />
+          <!-- In this devices section we can go through 
+            all of the devices that consumer have -->
+          <select name="devices" id="devices-b" onchange="location=this.value">
+            <option value="none" id="word-de" selected disabled hidden>
+              Devices
+            </option>
+            <option value="airconditioner.html">Air Conditioner</option>
+            <option value="lights.html">Blinds</option>
+            <option value="vacuum.html">Robotic vacuum cleaner</option>
+            <option value="oven.html">Oven</option>
+            <option value="alarmn-system.html">Security System</option>
+            <option value="thermostat.html">Thermostat</option>
+          </select>
+          <!-- This consumption will let consumer go through monthly consumptions -->
+          <select
+            name="Consumption"
+            id="consumption-b"
+            onchange="location=this.value"
+          >
+            <option value="none" id="word-de" selected disabled hidden>
+              Monthly Consumptions
+            </option>
+            <option value="consumption_customer.html">Mar 2022</option>
+            <option value="consumption_customer.html">Apr 2022</option>
+            <option value="consumption_customer.html">May 2022</option>
+            <option value="consumption_customer.html">Jun 2022</option>
+            <option value="consumption_customer.html">July 2022</option>
+            <option value="consumption_customer.html">Sep 2022</option>
+            <option value="consumption_customer.html">Oct 2022</option>
+            <option value="consumption_customer.html">Nov 2022</option>
+          </select>
+        </div>
+      </section>
+      <section class="outer-info">
+        <section class="info">
+          <div class="col1">
+            <div class="c1-row1">
+              <img src="images/vacuumicon.png" alt="" />
+            </div>
+            <div class="c1-row2">
+              <!-- This button will provide user to turn on/off the vacuum -->
+              <button
+                id="onoffbutton"
+                onclick="turnOff(onoffbutton),toggleBtn()"
+              >
+                TURN ON
+              </button>
+            </div>
+          </div>
+          <div class="col2">
+            <div class="c2-row1">
+              <!-- In this section consumer can see the charge of the vacuum -->
+              <p>Charge: 78%</p>
+            </div>
+            <div class="c2-row2">
+              <select name="programs" id="programs">
+                <!-- In this section consumer can change the program of the vacuum -->
+                <option value="none" selected disabled hidden>
+                  Select a program
+                </option>
+                <option value="program1">Normal Vacuum</option>
+                <option value="program2">Turbo Vacuum</option>
+                <option value="program3">Mopping with water</option>
+                <option value="program4">Mopping with soap</option>
+              </select>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      var btn = document.getElementById("onoffbutton");
+      // Here we get our variables by their id's to use in the functions
+
+      // Toggle function is used to change the background-color of the button
+      function toggleBtn() {
+        btn.classList.toggle("active");
+      }
+
+      // This function simply changes the text of the button when clicked on it
+      function turnOff(id) {
+        if (id.innerHTML == "TURN ON") {
+          id.innerHTML = "TURN OFF";
+        } else {
+          id.innerHTML = "TURN ON";
+        }
+      }
+    </script>
+  </body>
+</html>

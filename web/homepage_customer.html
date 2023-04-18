@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="homepage_customer.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Clicking on the logo lead you to the home page -->
+        <a class="logo" href="homepage_customer.html"
+          ><img src="images/logo.png" alt=""
+        /></a>
+        <!-- Log Out will lead you to the login page -->
+        <a class="log-out" href="login-customer.php">Log Out</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="row1">
+        <div class="r1-col1">
+          <!-- In this section we can see all of our devices and clicking them
+                will let consumer go to that page -->
+          <h1>My Devices</h1>
+          <div class="navbar">
+            <nav class="device-1">
+              <a href="alarmn-system.html"><li>Alarm System</li></a>
+              <a href="lights.html"><li>Lights</li></a>
+              <a href="airconditioner.html"><li>Air Conditioner</li></a>
+            </nav>
+            <nav id="device">
+              <a href="thermostat.html"><li>Thermostat</li></a>
+              <a href="vacuum.html"><li>Robotic Vacuum Cleaner</li></a>
+              <a href="oven.html"><li>Oven</li></a>
+            </nav>
+          </div>
+        </div>
+        <div class="r1-col2">
+          <!-- Cliking this will let consumer go to the consumptions page -->
+          <a href="consumption_customer.html">Monthly Consumptions</a>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="r2-col1">
+          <!-- In this section consumers can cut off or turn on their houses
+                     power,water,gas -->
+          <h1 id="power">Power is on</h1>
+          <button id="powerbutton" onclick="cutOffPower(powerbutton)">
+            Cut Off
+          </button>
+        </div>
+        <div class="r2-col2">
+          <h1 id="water">Water is on</h1>
+          <button id="waterbutton" onclick="cutOffWater(waterbutton)">
+            Cut Off
+          </button>
+        </div>
+        <div class="r2-col3">
+          <h1 id="gas">Gas is on</h1>
+          <button id="gasbutton" onclick="cutOffGas(gasbutton)">Cut Off</button>
+        </div>
+      </div>
+    </main>
+    <script>
+      // These functions are used to cut off or turn on power,water or gas
+      function cutOffPower(id) {
+        if (id.innerHTML == "Cut Off") {
+          id.innerHTML = "Turn On";
+          x = document.getElementById("power").innerHTML = "Power is off";
+        } else {
+          id.innerHTML = "Cut Off";
+          x = document.getElementById("power").innerHTML = "Power is on";
+        }
+      }
+
+      function cutOffWater(id) {
+        if (id.innerHTML == "Cut Off") {
+          id.innerHTML = "Turn On";
+          x = document.getElementById("water").innerHTML = "Water is off";
+        } else {
+          id.innerHTML = "Cut Off";
+          x = document.getElementById("water").innerHTML = "Water is on";
+        }
+      }
+
+      function cutOffGas(id) {
+        if (id.innerHTML == "Cut Off") {
+          id.innerHTML = "Turn On";
+          x = document.getElementById("gas").innerHTML = "Gas is off";
+        } else {
+          id.innerHTML = "Cut Off";
+          x = document.getElementById("gas").innerHTML = "Gas is on";
+        }
+      }
+    </script>
+  </body>
+</html>

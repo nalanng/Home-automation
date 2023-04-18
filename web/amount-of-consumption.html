@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="amount-of-consumption.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Click on the logo to go to the homepage. -->
+        <a class="logo" href="producer-search-screen.html">
+          <img src="images/logo.png" alt="" />
+        </a>
+        <!-- Click on the logo to go to the log in page. -->
+        <a class="sign-up" href="#">Log Out</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="account-info">
+        <!-- That section contains personal information such as profile picture and phone number. -->
+        <div id="profil-foto">
+          <img src="images/profil-foto.jpeg" alt="" />
+
+          <!-- "We used the 'select' attribute to enable the devices and their consumptions to be listed in a drop-down menu." -->
+
+          <select name="devices" id="devices-b" onchange="location=this.value">
+            <!-- We used the 'selected', 'disabled', and 'hidden' attributes to give a name to the drop-down menu that will not be visible in the pop-up window but will be displayed on the button. -->
+            <option value="none" id="word-de" selected disabled hidden>
+              Devices
+            </option>
+            <option value="aircondioner-for-product.html">
+              Air Conditioner
+            </option>
+            <option value="blinds-for-product.html">Blinds</option>
+            <option value="vacuum-cleaner-for-product.html">
+              Robotic vacuum cleaner
+            </option>
+            <option value="oven-for-product.html">Oven</option>
+            <option value="alarm-system-for-product.html">
+              Security System
+            </option>
+            <option value="thermostat-for-product.html">Thermostat</option>
+          </select>
+          <!-- Although the consumption page displays the same amounts every month as we do not retrieve the data from a database, our design goal is to show the consumption amounts within that month -->
+          <select
+            name="Consumption"
+            id="consumption-b"
+            onchange="location=this.value"
+          >
+            <option value="none" id="word-de" selected disabled hidden>
+              <h1>Consumption</h1>
+            </option>
+            <option value="amount-of-consumption.html">Mar 2022</option>
+            <option value="amount-of-consumption.html">Apr 2022</option>
+            <option value="amount-of-consumption.html">May 2022</option>
+            <option value="amount-of-consumption.html">Jun 2022</option>
+            <option value="amount-of-consumption.html">July 2022</option>
+            <option value="amount-of-consumption.html">Sep 2022</option>
+            <option value="amount-of-consumption.html">Oct 2022</option>
+            <option value="amount-of-consumption.html">Nov 2022</option>
+          </select>
+        </div>
+      </section>
+      <section class="info">
+        <div class="borderr">
+          <!-- We added device names as a link that we view the consumption amounts, enabling us to access device information simultaneously -->
+          <h1>The Amount of Consumption</h1>
+          <div class="links">
+            <a class="link" id="a1" href="aircondioner-for-product.html"
+              >- Air Conditioner -</a
+            >
+            <a class="link" id="a2" href="blinds-for-product.html"
+              >- Blinds -</a
+            >
+            <a class="link" id="a3" href="oven-for-product.html">- Oven - </a>
+            <a class="link" id="a4" href="vacuum-cleaner-for-product.html"
+              >- Robotic Vacuum Cleaner-
+            </a>
+            <a class="link" id="a5" href="alarm-system-for-product.html"
+              >- Security System -</a
+            >
+            <a class="link" id="a6" href="thermostat-for-product.html"
+              >- Thermostat-
+            </a>
+          </div>
+          <!-- this block contains 6 device's concumption, there is 6 device. -->
+          <div class="infos">
+            <p class="info-p" id="p1">20 kw electricity</p>
+            <p class="info-p" id="p2">87 kw electricity</p>
+            <p class="info-p" id="p3">14 kw electricity</p>
+            <p class="info-p" id="p4">70 kw electricity</p>
+            <p class="info-p" id="p5">25 kw electricity</p>
+            <p class="info-p" id="p6">78 kw electricity</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

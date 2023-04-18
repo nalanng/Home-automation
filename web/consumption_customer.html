@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="consumption_customer.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Clicking on the logo lead you to the home page -->
+        <a class="logo" href="homepage_customer.html"
+          ><img src="images/logo.png" alt=""
+        /></a>
+        <!-- Log Out will lead you to the login page -->
+        <a class="log-out" href="login-customer.php">Log Out</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="row1">
+        <div class="r1-col1">
+          <!-- In this section we can see the consumptions of this month so far -->
+          <h1>Your Consumptions This Month</h1>
+          <div class="navbar">
+            <nav>
+              <p><li>You has consumed 70kWh energy this month</li></p>
+              <p><li>You has consumed 20 cubic meters water this month</li></p>
+              <p><li>You has consumed 960 cubic meters gas this month</li></p>
+            </nav>
+          </div>
+        </div>
+        <div class="r1-col2">
+          <div class="r1-col2-1">
+            <a href="https://en.wikipedia.org/wiki/Energy_conservation"
+              >For more energy solutions...</a
+            >
+          </div>
+          <div class="r1-col2-2">
+            <!-- clicking this button will activate the power saver mode-->
+            <p>Power saver mode</p>
+            <button type="button" onclick="toggle()" id="button">
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row2">
+        <!-- In this section consumer can see daily consumptions and their comparisons  -->
+        <div class="devices-info-1">
+          <p id="p1">
+            Daily Energy <br />
+            Consumption
+          </p>
+          <p id="p2">
+            5% <br />
+            less from yesterday
+          </p>
+        </div>
+        <div id="devices-info-2">
+          <p id="p1">
+            Daily Water <br />
+            Consumption
+          </p>
+          <p id="p2">
+            25% <br />
+            less from yesterday
+          </p>
+        </div>
+        <div id="devices-info-3">
+          <p id="p1">
+            Daily Energy <br />
+            Consumption
+          </p>
+          <p id="p2">
+            17% <br />
+            more from yesterday
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // This function is used to change
+      //the background-color of the power saver mode button
+      button = document.getElementById("button");
+
+      function toggle() {
+        button.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>
