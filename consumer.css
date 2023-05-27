@@ -1,0 +1,82 @@
+/* CSS codes for consumer.html file */
+
+body {
+  margin: 0;
+  background-color: rgb(255, 252, 248);
+}
+
+/* header */
+
+header#header.consumer {
+  border-bottom: 1px solid rgba(89, 237, 200, 0.4);
+  width: 100%;
+  left: 0%;
+}
+li {
+  display: inline;
+  list-style: none;
+}
+header#header.consumer a {
+  text-decoration: none;
+  font-size: large;
+  color: black;
+  padding: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+header#header.consumer a#logo {
+  padding-left: 0;
+  font-size: xx-large;
+}
+header#header.consumer a#signOut {
+  position: absolute;
+  right: 30px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 15px;
+}
+
+/* menu */
+
+div#menu {
+  position: fixed;
+  width: 20%;
+  left: -20px;
+  top: 30%;
+  margin-top: 10px;
+  text-align: center;
+}
+div.list {
+  display: inline-block;
+  width: 170px;
+  text-align: center;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+div#menu li {
+  margin: 0 10px;
+}
+div#consumption.list {
+  border: 1px solid rgba(0, 0, 0, 0.907);
+  background-color: rgba(155, 238, 241, 0.907);
+}
+div#menu a {
+  font-size: x-large;
+  text-decoration: none;
+  padding: 5px;
+  color: #000;
+}
+
+/* content */
+
+div.content {
+  position: absolute;
+  width: 70%;
+  right: 70px;
+  top: 140px;
+}

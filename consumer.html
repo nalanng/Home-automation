@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="consumer.css" />
+  </head>
+
+  <body>
+    <header class="consumer" id="header">
+      <ul>
+        <li>
+          <a href="#" id="logo">SNautomation</a>
+        </li>
+        <li><a href="#" id="signOut">Sign Out</a></li>
+      </ul>
+    </header>
+
+    <div id="menu">
+      <ul>
+        <li>
+          <div class="list" id="list1">
+            <a href="#" onclick="loadContent('Airconditioner')"
+              >Air Conditioner</a
+            >
+          </div>
+        </li>
+        <li>
+          <div class="list">
+            <a href="#" onclick="loadContent('Alarm')">Alarm System</a>
+          </div>
+        </li>
+        <li>
+          <div class="list">
+            <a href="#" onclick="loadContent('Blinds')">Blinds</a>
+          </div>
+        </li>
+        <li>
+          <div class="list">
+            <a href="#" onclick="loadContent('Oven')">Oven</a>
+          </div>
+        </li>
+        <li>
+          <div class="list">
+            <a href="#" onclick="loadContent('Thermostat')">Thermostat</a>
+          </div>
+        </li>
+        <li>
+          <div class="list">
+            <a href="#" onclick="loadContent('Vacuum')">Vacuum Cleaner</a>
+          </div>
+        </li>
+        <li>
+          <div class="list" id="consumption">
+            <a href="#" onclick="loadContent('Consumption')">Consumption</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content" id="airconditioner"></div>
+    <div class="content" id="alarm"></div>
+    <div class="content" id="blinds"></div>
+    <div class="content" id="oven"></div>
+    <div class="content" id="thermostat"></div>
+    <div class="content" id="vacuum"></div>
+    <div class="content" id="consumption-p"></div>
+
+    <script>
+      var currentContent = null;
+
+      function loadContent(page) {
+        var contentDiv;
+        if (page === "Airconditioner") {
+          contentDiv = document.getElementById("airconditioner");
+          contentDiv.innerHTML = "";
+          contentDiv.classList.add("air-style");
+        } else if (page === "Alarm") {
+          contentDiv = document.getElementById("alarm");
+          contentDiv.innerHTML = "b";
+        } else if (page === "Blinds") {
+          contentDiv = document.getElementById("blinds");
+          contentDiv.innerHTML = "c";
+        } else if (page === "Oven") {
+          contentDiv = document.getElementById("oven");
+          contentDiv.innerHTML = "";
+        } else if (page === "Thermostat") {
+          contentDiv = document.getElementById("thermostat");
+          contentDiv.innerHTML = "e";
+        } else if (page === "Vacuum") {
+          contentDiv = document.getElementById("vacuum");
+          contentDiv.innerHTML = "f";
+        } else {
+          contentDiv = document.getElementById("consumption-p");
+          contentDiv.innerHTML = "g";
+        }
+
+        // hidden older content.
+        if (currentContent !== null) {
+          currentContent.style.display = "none";
+        }
+
+        // show new content.
+        contentDiv.style.display = "block";
+        currentContent = contentDiv;
+      }
+
+      // to assign consumption is default value
+      //   loadContent("Consumption");
+    </script>
+
+    <script>
+      // Here we get our variables by their id's to use in the functions
+      var btn1 = document.getElementById("onoffbutton");
+      var btn2 = document.getElementById("button");
+      // This function simply changes the text of the button when clicked on it
+      function turnOff(id) {
+        if (id.innerHTML == "TURN OFF") {
+          id.innerHTML = "TURN ON";
+        } else {
+          id.innerHTML = "TURN OFF";
+        }
+      }
+      // Toggle functions are used to change the background colors when clicked on them
+      function toggleBtn1() {
+        btn1.classList.toggle("active1");
+      }
+      function toggleBtn2() {
+        btn2.classList.toggle("active2");
+      }
+      // This function, same as the turnOff, will activate summer or winter mode
+      // by changing their innerHTML
+      function activate(id) {
+        if (id.innerHTML == "Activate winter mode") {
+          id.innerHTML = "Activate summer mode";
+          x = document.getElementById("mode").innerHTML =
+            "Winter mode is active";
+        } else {
+          id.innerHTML = "Activate winter mode";
+          x = document.getElementById("mode").innerHTML =
+            "Summer mode is active";
+        }
+      }
+      // In this function, we provide the changes on the temperature
+      // by clicking plus and minus buttons
+      function plus(id) {
+        var a = parseInt(id.innerHTML);
+        a += 1;
+        id.innerHTML = a;
+      }
+      function minus(id) {
+        var a = parseInt(id.innerHTML);
+        a -= 1;
+        id.innerHTML = a;
+      }
+    </script>
+  </body>
+</html>
