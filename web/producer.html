@@ -13,6 +13,7 @@
         <li>
           <a href="#" id="logo">SNautomation</a>
         </li>
+        <li><a href="#" id="home-p" onclick="loadContent('Home')">Home </a></li>
         <li><a href="#" id="signOut">Sign Out</a></li>
       </ul>
     </header>
@@ -59,30 +60,54 @@
       </ul>
     </div>
 
-    <div id="content"></div>
+    <div class="content" id="home"></div>
+    <div class="content" id="airconditioner"></div>
+    <div class="content" id="alarm"></div>
+    <div class="content" id="blinds"></div>
+    <div class="content" id="oven"></div>
+    <div class="content" id="thermostat"></div>
+    <div class="content" id="vacuum"></div>
+    <div class="content" id="consumption-p"></div>
 
     <script>
+      var currentContent = null;
+
       function loadContent(page) {
-        var contentDiv = document.getElementById("content");
-        if (page === "Airconditioner") {
+        var contentDiv;
+        if (page === "Home") {
+          contentDiv = document.getElementById("home");
+          contentDiv.innerHTML = "aaaaa";
+        } else if (page === "Airconditioner") {
+          contentDiv = document.getElementById("airconditioner");
           contentDiv.innerHTML = "a";
         } else if (page === "Alarm") {
+          contentDiv = document.getElementById("alarm");
           contentDiv.innerHTML = "b";
         } else if (page === "Blinds") {
+          contentDiv = document.getElementById("blinds");
           contentDiv.innerHTML = "c";
         } else if (page === "Oven") {
+          contentDiv = document.getElementById("oven");
           contentDiv.innerHTML = "d";
         } else if (page === "Thermostat") {
+          contentDiv = document.getElementById("thermostat");
           contentDiv.innerHTML = "e";
         } else if (page === "Vacuum") {
+          contentDiv = document.getElementById("vacuum");
           contentDiv.innerHTML = "f";
         } else {
+          contentDiv = document.getElementById("consumption-p");
           contentDiv.innerHTML = "g";
         }
-      }
+        // hidden older content.
+        if (currentContent !== null) {
+          currentContent.style.display = "none";
+        }
 
-      // to assign consumption is default value
-      loadContent("Consumption");
+        // show new content.
+        contentDiv.style.display = "block";
+        currentContent = contentDiv;
+      }
     </script>
   </body>
 </html>
