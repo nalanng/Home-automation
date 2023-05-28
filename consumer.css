@@ -1,0 +1,172 @@
+/* CSS codes for consumer.html file */
+
+body {
+  margin: 0;
+  background-color: rgb(255, 252, 248);
+}
+
+/* header */
+
+header#header.consumer {
+  border-bottom: 1px solid rgba(89, 237, 200, 0.4);
+  width: 100%;
+  left: 0%;
+}
+li {
+  display: inline;
+  list-style: none;
+}
+header#header.consumer a {
+  text-decoration: none;
+  font-size: large;
+  color: black;
+  padding: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+header#header.consumer a#logo {
+  padding-left: 0;
+  font-size: xx-large;
+}
+header#header.consumer a#signOut {
+  position: absolute;
+  right: 30px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 15px;
+}
+
+/* menu */
+
+div#menu {
+  position: fixed;
+  width: 20%;
+  left: -20px;
+  top: 30%;
+  margin-top: 10px;
+  text-align: center;
+}
+div.list {
+  display: inline-block;
+  width: 170px;
+  text-align: center;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+div#menu li {
+  margin: 0 10px;
+}
+div#consumption.list {
+  border: 1px solid rgba(0, 0, 0, 0.907);
+  background-color: rgba(155, 238, 241, 0.907);
+}
+div#menu a {
+  font-size: x-large;
+  text-decoration: none;
+  padding: 5px;
+  color: #000;
+}
+
+/* content */
+
+div.content {
+  position: absolute;
+  width: 70%;
+  right: 70px;
+  top: 140px;
+}
+
+/* For air conditioner css codes (air-style class) */
+
+h1#g1.g1-style {
+  text-align: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+}
+div#g2.g1-style {
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  top: 130px;
+}
+div#g2.g1-style button {
+  background-color: rgb(168, 169, 222);
+  color: aliceblue;
+  border-radius: 5px;
+  transform: translateY(9px);
+}
+
+div#g.g1-style {
+  top: 190px;
+  display: flex;
+  transform: translateY(100px);
+}
+
+div#g.g1-style > div {
+  flex: 1;
+  border: 1px solid #000;
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  border-radius: 5px;
+}
+
+div.g1-style button {
+  padding: 10px;
+  margin: 5px;
+}
+
+@media (max-width: 1020px) {
+  div.content {
+    width: 50%;
+  }
+
+  div#g.g1-style {
+    display: block;
+  }
+
+  div#g.g1-style > div {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 606px) {
+  div#menu {
+    position: absolute;
+    width: 100%;
+    top: 100px;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  div#g2.g1-style button {
+    padding: 10px;
+    margin: 5px;
+    transform: translateY(30px);
+  }
+
+  div#airconditioner.content {
+    width: 70%;
+    transform: translate(7px, 55%);
+  }
+
+  div#oven.content {
+    width: 70%;
+    transform: translate(7px, 55%);
+  }
+
+  div#thermostat.content {
+    width: 70%;
+    transform: translate(7px, 55%);
+  }
+}
