@@ -109,7 +109,7 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign Up</button>
                 </div>
 
-                <p class="text-center text-muted mt-4 mb-0">Have already an account? <a href="#!"
+                <p class="text-center text-muted mt-4 mb-0">Have already an account? <a href="login.php"
                     class="fw-bold text-body"><u>Login here</u></a></p>
 
               </form>

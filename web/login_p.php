@@ -57,7 +57,6 @@ header#header.producer a#signinp {
   border-radius: 20px;
   top: 10px;
 }
-
 .gradient-custom-3 {
 
 background: #84fab0;
@@ -76,7 +75,7 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
     
 </style>
 <header class="producer" id="header">
-      <ul>
+    <ul>
         <li>
           <a href="#" id="logo">SNautomation</a>
         </li>
@@ -93,7 +92,7 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Please Sign In AS CONSUMER</h2>
+              <h2 class="text-uppercase text-center mb-5">Please Sign In AS PRODUCER</h2>
 
               <form>
                 <div class="form-outline mb-3">
@@ -110,9 +109,6 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign In</button>
                 </div>
 
-                <p class="text-center text-muted mt-4 mb-0">New Consumer? <a href="signup.php"
-                    class="fw-bold text-body"><u> Sign Up here</u></a></p>
-
               </form>
 
             </div>
@@ -126,3 +122,7 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
