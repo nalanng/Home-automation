@@ -33,7 +33,7 @@ header#header.producer a#logo {
   padding-left: 0;
   font-size: xx-large;
 }
-header#header.producer a#signOut {
+header#header.producer a#signup {
   position: absolute;
   right: 30px;
   border: 1px solid rgba(89, 237, 200, 0.907);
@@ -41,6 +41,23 @@ header#header.producer a#signOut {
   border-radius: 20px;
   top: 10px;
 }
+header#header.producer a#signinc {
+  position: absolute;
+  right: 150px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
+header#header.producer a#signinp {
+  position: absolute;
+  right: 370px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
+
 .gradient-custom-3 {
 
 background: #84fab0;
@@ -63,7 +80,9 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
         <li>
           <a href="#" id="logo">SNautomation</a>
         </li>
-        <li><a href="#" id="signOut">Sign Out</a></li>
+        <li><a href="signup.php" id="signup">Sign Up</a></li>
+        <li><a href="login_c.php" id="signinc">Sign In As Consumer</a></li>
+        <li><a href="login_p.php" id="signinp">Sign In As Producer</a></li>
       </ul>
     </header>
 <body>
@@ -74,43 +93,25 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-3">Create an account</h2>
+              <h2 class="text-uppercase text-center mb-5">Please Sign In AS CONSUMER</h2>
 
               <form>
-                <div class="form-outline mb-3">
-                  <input type="text" id="form3Example1cg" class="form-control" />
-                  <label class="form-label" for="form3Example1cg">Your Name</label>
-                </div>
-
                 <div class="form-outline mb-3">
                   <input type="email" id="form3Example3cg" class="form-control" />
                   <label class="form-label" for="form3Example3cg">Your Email</label>
                 </div>
-
-                <div class="form-outline mb-3">
-                <input type="tel" id="phone" name="phone" id="form3Example1cg" class="form-control" 
-                placeholder="5xx-xxx-xx-xx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}" required>
-                <label class="form-label" for="form3Example1cg">Phone Number</label>
-                </div>
-                
-
                 <div class="form-outline mb-3">
                   <input type="password" id="form3Example4cg" class="form-control" />
                   <label class="form-label" for="form3Example4cg">Password</label>
                 </div>
 
-                <div class="form-outline mb-3">
-                  <input type="password" id="form3Example4cdg" class="form-control" />
-                  <label class="form-label" for="form3Example4cdg">Repeat your password</label>
-                </div>
-
                 <div class="d-flex justify-content-center">
                   <button type="button"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign Up</button>
+                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign In</button>
                 </div>
 
-                <p class="text-center text-muted mt-4 mb-0">Have already an account? <a href="login.php"
-                    class="fw-bold text-body"><u>Login here</u></a></p>
+                <p class="text-center text-muted mt-4 mb-0">New Consumer? <a href="signup.php"
+                    class="fw-bold text-body"><u> Sign Up here</u></a></p>
 
               </form>
 
