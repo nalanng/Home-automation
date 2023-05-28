@@ -14,6 +14,7 @@
         <li>
           <a href="#" id="logo">SNautomation</a>
         </li>
+        <li><a href="#" id="home-p" onclick="loadContent('Home')">Home </a></li>
         <li><a href="#" id="signOut">Sign Out</a></li>
       </ul>
     </header>
@@ -59,7 +60,7 @@
         </li>
       </ul>
     </div>
-
+    <div class="content" id="home"></div>
     <div class="content" id="airconditioner"></div>
     <div class="content" id="alarm"></div>
     <div class="content" id="blinds"></div>
@@ -73,7 +74,10 @@
 
       function loadContent(page) {
         var contentDiv;
-        if (page === "Airconditioner") {
+        if (page === "Home") {
+          contentDiv = document.getElementById("home");
+          contentDiv.innerHTML = "aaaaa";
+        } else if (page === "Airconditioner") {
           contentDiv = document.getElementById("airconditioner");
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">AIR CONDITIONER</h1>
@@ -102,13 +106,56 @@
         </div>
       </div>
       `;
-          contentDiv.classList.add("air-style");
         } else if (page === "Alarm") {
           contentDiv = document.getElementById("alarm");
-          contentDiv.innerHTML = "b";
+          contentDiv.innerHTML = `
+      <h1 class="g1-style" id="g1">ALARM SYSTEM</h1>
+      <div class="g1-style" id="g2">
+        <button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button>
+      </div>
+      <div class="g1-style" id="g">
+        <div class="g1-style" id="g3">
+          <p id="mode">The door is locked</p>
+            <!-- This button locks/unlocks the door-->
+            <button id="button2" onclick="activate(button2),toggleBtn2()">
+              Unlocked the Door
+            </button>        
+        </div>
+      </div>
+      `;
         } else if (page === "Blinds") {
           contentDiv = document.getElementById("blinds");
-          contentDiv.innerHTML = "c";
+          contentDiv.innerHTML = `
+          <h1 class="g1-style" id="g1">BLINDS</h1>
+
+<div id="g2-">
+  <div id="g2-3" class="g2-style">
+    <div>
+      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
+      <div><p style="font-size: medium;">Living Room</p></div>
+    </div>
+  </div>
+  <div id="g2-4" class="g2-style">
+    <div>
+      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
+      <div><p style="font-size: medium;">Kitchen</p></div>
+    </div>
+  </div>
+  <div id="g2-5" class="g2-style">
+    <div>
+      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
+      <div><p style="font-size: medium;">Bedroom</p></div>
+    </div>
+  </div>
+  <div id="g2-6" class="g2-style">
+    <div>
+      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
+      <div><p style="font-size: medium;">Bathroom</p></div>
+    </div>
+  </div>
+</div>
+
+  `;
         } else if (page === "Oven") {
           contentDiv = document.getElementById("oven");
           contentDiv.innerHTML = `
@@ -136,10 +183,10 @@
             <option value="none" selected disabled hidden>
               Select a program
             </option>
-            <option value="program1">Lower heat</option>
-            <option value="program2">Upper heat</option>
-            <option value="program3">Upper and lower heat</option>
-            <option value="program4">Fan with lower heat</option>
+            <option value="program1">Lower </option>
+            <option value="program2">Upper </option>
+            <option value="program3">Upper and lower </option>
+            <option value="program4">Fan with lower </option>
             <option value="program5">Fan oven</option>
             <option value="program6">Grill</option>
           </select>
@@ -198,10 +245,37 @@
       </div>`;
         } else if (page === "Vacuum") {
           contentDiv = document.getElementById("vacuum");
-          contentDiv.innerHTML = "f";
+          contentDiv.innerHTML = `
+      <h1 class="g1-style" id="g1">VACUUM CLEANER</h1>
+      <div class="g1-style" id="g2">
+        <button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button>
+      </div>
+      <div class="g1-style" id="g">
+        <div class="g1-style" id="g3">
+          <!-- In this section consumer can see the charge of the vacuum -->
+              <p>Charge: 78%</p>
+        </div>
+        <div class="g1-style" id="g4">
+          <select name="programs" id="programs">
+                <!-- In this section consumer can change the program of the vacuum -->
+                <option value="none" selected disabled hidden>
+                  Select a program
+                </option>
+                <option value="program1">Normal Vacuum</option>
+                <option value="program2">Turbo Vacuum</option>
+                <option value="program3">Mopping with water</option>
+                <option value="program4">Mopping with soap</option>
+              </select>
+        </div>
+      </div>
+      `;
         } else {
           contentDiv = document.getElementById("consumption-p");
-          contentDiv.innerHTML = "g";
+          contentDiv.innerHTML = `
+      <h1 class="g1-style" id="g1">CONSUMPTION</h1>
+      
+      </div>
+      `;
         }
         // hidden older content.
         if (currentContent !== null) {
@@ -242,10 +316,16 @@
           id.innerHTML = "Activate summer mode";
           x = document.getElementById("mode").innerHTML =
             "Winter mode is active";
-        } else {
+        } else if (id.innerHTML == "Activate summer mode") {
           id.innerHTML = "Activate winter mode";
           x = document.getElementById("mode").innerHTML =
             "Summer mode is active";
+        } else if (id.innerHTML == "Unlocked the Door") {
+          id.innerHTML = "Locked the Door";
+          document.getElementById("mode").innerHTML = "The door is unlocked !!";
+        } else {
+          id.innerHTML = "Unlocked the Door";
+          document.getElementById("mode").innerHTML = "The door is locked";
         }
       }
       // In this function, we provide the changes on the temperature
