@@ -5,178 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        *{
-            margin: 0;
-        }
-        header{
-            position: relative;
-            height: 10vh;
-            background-color: #000;
-            border-bottom: 1px solid rgb(203, 156, 122);
-        }
-        nav{
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            margin-left: 5vh;
-        }
-        .sign-up{
-            background-color: #fff;
-            margin-left: 85vh;
-        }
-        .logo{
-            background-color: #fff;
-        }
-        main{
-            position: relative;
-            height: 90vh;
-            background-image: url(images/sign-in.png);
-            background-size: cover ;
-        }
-        .producer-login{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            width: 30vh;
-            height: 50vh;
-            text-align: center;
-            border:1px solid  rgb(203, 156, 122);
-            box-shadow:10px 10px 30px  rgb(203, 156, 122);
-            background-color: rgb(203, 156, 122);
-        }
-        .content{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            height: 30vh;
-            width: 100%;
-        }
-        
-        .hh2{
-
-            position: absolute;
-            height: 10vh;
-            width: 100%;
-        }
-        .hh2 h2{
-
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            border-bottom: 2px solid rgb(0, 0, 0);
-            width: 15vh;
-
-            opacity: 100%;
-        }  
-
-        .content .empty{
-            margin-top: 1vh;
-        }   
-        .content input{
-            padding: 4%;
-            margin-top: 1vh;
-            margin-bottom: 3vh;
-            border-radius: 5%;
-        }
-        .content input:hover{
-            background-color: rgb(236, 206, 236);
-            border-color: rgb(236, 206, 236);
-        }
-        .content input:active{
-            background-color: #fff;
-            border-color: #fff;
-        }
-        
-        .login1 p{
-            margin-top: 1vh;
-            width: 18.5vh;
-        }
-        .login2 p{
-            width: 16vh;
-            margin-top: 3vh;
-        }
-        .login-b{
-            margin-top: 40vh;
-            text-align: center;
-
-        }
-    
-        .error1 {
-            color: #BE0202;
-            position: absolute;
-            left: 1%;
-            top: 35%;
-        }
-        .error2 {
-            color: #BE0202;
-            position: absolute;
-            right: 33%;
-            top:80%;
-            width: 150px;
-            
-        }
-        .error3 {
-            color: #BE0202;
-            position: absolute;
-            right: 35%;
-            top:85%;
-        }
-
-    </style>
 </head>
 <body>
-    <?php
-       $idErr=$passwordErr="";
-       $id=$password="";
-       $err="";
-        // we define variables to use if there are any validations
-   
-        // In this section we first control the method that is used for action
-        // And then we give some error messages to the error values
-        //If there are any blocks that was not filled this will give us an error
-       if ($_SERVER["REQUEST_METHOD"] == "POST") {
-           if(empty($_POST["id"])) {
-               $idErr="*ID is required!";
-           }
-           else{
-               $id=test_input($_POST["id"]);
-               if(!(is_numeric($id))) {
-                   $idErr="*ID must be only numeric values!";
-               }
-               
-           }
-           
-           if(empty($_POST["password"])) {
-               $passwordErr="*Password is required!";
-           }
-           else{
-               $password=test_input($_POST["password"]);
-           }
-           //In this section we controlling the input values if they are
-           // equal to the values we decided it will let consumer to login
-           if(!(empty($_POST["id"])) && !(empty($_POST["password"]))){
-            if($_POST["id"]=="20200808040" && $_POST["password"]=="123456") {
-                header("location:homepage_customer.html");
-                exit();
-            }
-            else {
-                $err="*Invalid id/password!";
-            }
-           }
-       }
-       // In this function we strip unnecessary characters and
-       // turn the input into a safer mode
-       function test_input($data) {
-           $data = trim($data);
-           $data = stripcslashes($data);
-           $data = htmlspecialchars($data);
-           return $data;
-       }
-    ?>
 
 
     <header>
@@ -187,31 +17,49 @@
     </header>
         
     <main>
-        <div class="producer-login">
-            <div class="hh2">
-                <h2>Login</h2>
-            </div>
-            <div class="content">
-                <div class="empty"></div>
-                <div class="login1">
-                    <p>Customer ID</p>
-                    <!-- In this section we print all the validation errors if there are any -->
-                    <form method="POST" >
-                    <input type="text" placeholder="Enter customer ID" name="id" value="<?php echo $id;?>">
-                    <span class="error1"><?php echo $idErr;?></span>
-                </div>
-                <div class="login2">
-                    <p>Password</p>
-                    <input type="password" placeholder="Enter password" name="password" value="<?php echo $password;?>">
-                    <span class="error2"><?php echo $passwordErr;?></span>
-                    <span class="error3"><?php echo $err;?></span>
-                </div>
-                </div>
-            <div class="login-b">
-                <input type="submit" value="Login">
-            </div> 
-        </form>   
-        </div>
+    <form class="row g-3">
+  <div class="col-md-4">
+    <label for="validationDefault01" class="form-label">First name</label>
+    <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
+  </div>
+  <div class="col-md-4">
+    <label for="validationDefault02" class="form-label">Last name</label>
+    <input type="text" class="form-control" id="validationDefault02" value="Otto" required>
+  </div>
+  <div class="col-md-4">
+    <label for="validationDefaultUsername" class="form-label">Username</label>
+    <div class="input-group">
+      <span class="input-group-text" id="inputGroupPrepend2">@</span>
+      <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationDefault03" class="form-label">City</label>
+    <input type="text" class="form-control" id="validationDefault03" required>
+  </div>
+  <div class="col-md-3">
+    <label for="validationDefault04" class="form-label">State</label>
+    <select class="form-select" id="validationDefault04" required>
+      <option selected disabled value="">Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label for="validationDefault05" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="validationDefault05" required>
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+      <label class="form-check-label" for="invalidCheck2">
+        Agree to terms and conditions
+      </label>
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
     </main>
 </body>
 </html>
