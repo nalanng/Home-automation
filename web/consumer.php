@@ -9,9 +9,21 @@
   </head>
 <style>
 /* for consumption info content */
-div#consumption-p.content {
+@media(min-width :900px){
+  div#consumption-p.content {
   width: 40%;
   transform: translateX(-50%);
+  }
+}
+@media(max-width:434px){
+  div.content{ 
+    transform: translateX(8%);
+   }
+}
+h1#g1.g1-style {
+  text-align: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
 }
   .echo {
   text-align: center;
@@ -25,7 +37,7 @@ div#consumption-p.content {
   font-weight: bold;
 
 }
-#consumption-text{
+div#consumption-p.content{
   padding: 20px;
 }
 </style>

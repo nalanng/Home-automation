@@ -7,6 +7,39 @@
     <title>Document</title>
     <link rel="stylesheet" href="producer.css" />
   </head>
+  <style>
+/* for consumption info content */
+@media(min-width :900px){
+  div#consumption-p.content {
+  width: 40%;
+  transform: translateX(-50%);
+  }
+}
+@media(max-width:434px){
+  div.content{ 
+    transform: translateX(8%);
+   }
+}
+h1#g1.g1-style {
+  text-align: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+}
+  .echo {
+  text-align: center;
+  font-size: xx-large;
+  transform: translateY(15px);
+}
+#total{
+  border-top: 1px solid black;
+  padding-top: 25px;
+  color: #ad1010;
+  font-weight: bold;
+}
+div#consumption-p.content{
+  padding: 20px;
+}
+</style>
   <body>
     <header class="producer" id="header">
       <ul>
@@ -97,8 +130,58 @@
           contentDiv.innerHTML = "f";
         } else {
           contentDiv = document.getElementById("consumption-p");
-          contentDiv.innerHTML = "g";
-        }
+          contentDiv.innerHTML = `
+      <h1 class="g1-style" id="g1">CONSUMPTION</h1>
+      <div id="consumption-text">
+      <?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT AirCons, AlarmCons, LightCons, ThermCons, OvenCons, VacuumCons
+              FROM `Consumption` 
+              WHERE ConsumptionID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='echo'> Air Condition Consumption: ".$row['AirCons'] . "<br/><br /></div>"; 
+
+      echo "<div class='echo'> Alarm System Consumption: ".$row['AlarmCons'] ."<br /><br /></div>"; 
+
+      echo "<div class='echo'> Lights Consumption: ".$row['LightCons'] ."<br /><br /></div>";
+      
+      echo "<div class='echo'>Thermostat Consumption: ".$row['ThermCons'] ."<br /><br /></div>";
+
+      echo "<div class='echo'> Oven Consumption: ".$row['OvenCons'] ."<br /><br /></div>";
+
+      echo "<div class='echo'> Vacuum Cleaning Consumption: ".$row['VacuumCons'] ."<br /><br /></div>";
+
+      //total concumption
+      $total = $row['AirCons'] + $row['AlarmCons'] + $row['LightCons'] + $row['ThermCons'] + $row['OvenCons'] + $row['VacuumCons'];
+  echo "<div class='echo' id='total'> Total Consumption: " . $total . "</div>";
+    } else {
+         echo "Sonuç bulunamadı."; } 
+      
+      // close
+      $connection->close(); 
+      ?>
+      </div>`;
+      
+    }
+
         // hidden older content.
         if (currentContent !== null) {
           currentContent.style.display = "none";
@@ -108,6 +191,7 @@
         contentDiv.style.display = "block";
         currentContent = contentDiv;
       }
+      loadContent("Home");
     </script>
   </body>
     </php>
