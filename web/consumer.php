@@ -1,5 +1,4 @@
-@@ -1,345 +0,0 @@
-<!DOCTYPE html>
+<!DOCTYPE php>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
