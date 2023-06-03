@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="consumer.css" />
-  </head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
 <style>
-/* for consumption info content */
 @media(min-width :900px){
   div#consumption-p.content {
   width: 40%;
@@ -40,6 +40,18 @@ h1#g1.g1-style {
 div#consumption-p.content{
   padding: 20px;
 }
+div.chartStyle {
+  height: 280;
+}
+.datetime-container {
+  position: fixed;
+  top: 75px;
+  right: 65px;
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+  }    
+
 </style>
   <body>
     <header class="consumer" id="header">
@@ -157,8 +169,69 @@ if ($connection->connect_error) {
         var contentDiv;
         if (page === "Home") {
           contentDiv = document.getElementById("home");
-          contentDiv.innerHTML = "aaaaa";
-        } else if (page === "Airconditioner") {
+          contentDiv.innerHTML = `
+          <div class="datetime-container">
+            <h3 id="time"></h3>
+            <h3 id="date"></h3>
+          </div>
+          <div id="termometre"></div>
+          <div class="chartStyle" id="c1"><canvas id="myChart"></canvas>`;
+
+     // change canvas element and create a graphic 
+     var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', 
+            data: {
+                labels: ['Air Conditioner', 'Alarm System', 'Lights', 'Thermostat', 'Oven', 'Vacuum Cleaner'], // title of datas
+                datasets: [{
+                    label: 'Device Consumption', // title of bar
+                    data: [airCons, alarmCons, lightCons, thermCons, ovenCons, vacuumCons], // datas for y axis
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)', 
+                    borderColor: 'rgba(0, 123, 255, 1)', 
+                    borderWidth: 1 
+                }]
+            },
+            options: {
+                responsive: true, 
+                scales: {
+                    y: {
+                        beginAtZero: true // y axis start 0
+                    }
+                }
+            }
+        });
+      
+
+      function updateDateTime() {
+        var currentDate = new Date(); // the current time and date
+
+        var year = currentDate.getFullYear(); // take years
+        var month = currentDate.getMonth() + 1; // Take months 
+        var day = currentDate.getDate(); // take day
+
+        var hour = currentDate.getHours(); // take hours
+        var minute = currentDate.getMinutes(); // take minutes
+        var second = currentDate.getSeconds(); // take seconds
+
+        var formattedDate = day.toString().padStart(2, '0') + '/' +
+                            month.toString().padStart(2, '0') + '/' +
+                            year;
+
+        var formattedTime = hour.toString().padStart(2, '0') + ':' +
+                            minute.toString().padStart(2, '0') + ':' +
+                            second.toString().padStart(2, '0');
+
+        document.getElementById('date').textContent = "Tarih: " + formattedDate; // update date
+        document.getElementById('time').textContent = "Saat: " + formattedTime; // update time
+      }
+
+      //  date and time change, when page open
+      updateDateTime();
+
+      // update time and date per one second
+      setInterval(updateDateTime, 1000);
+
+  
           contentDiv = document.getElementById("airconditioner");
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">AIR CONDITIONER</h1>
@@ -356,7 +429,7 @@ if ($connection->connect_error) {
       <h1 class="g1-style" id="g1">CONSUMPTION</h1>
       <div id="consumption-text">
       <?php
-// Veritabanı bağlantısı
+// database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -469,4 +542,4 @@ if ($connection->connect_error) {
       }
     </script>
   </body>
-</html>
+    </php>
