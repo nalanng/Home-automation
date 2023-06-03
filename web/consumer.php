@@ -40,23 +40,87 @@ h1#g1.g1-style {
 }
 div#consumption-p.content{
   padding: 20px;
+  top: 140px;
 }
 div.chartStyle {
-  height: 280;
+  height: 300;
 }
 .datetime-container {
-  position: fixed;
-  top: 75px;
-  right: 65px;
+  position: absolute;
+  top:-270px;
+  right: 10px;
   font-size: 18px;
   color: #000;
   text-align: center;
   }    
+.temp-container{
+  display: flex;
+  width: 60%;
+  transform: translate(20px,-100px);
+}
+.temp{
+  flex: 1;
+  margin: 1px;
+}
+div.content {
+  top: 240px;
+}
+div#home.content{
+  transform: translateY(80px);
+}
+.lightStatus {
+    position: absolute;
+    width: 200px;
+    top: -50px;
+    left: 50%;
+    border: 1px solid #ccc;
+    padding-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
 
-.thermometer {
-  display: inline-block;
-  width: 100px;
-  height: 300px;
+  .lightStatus .l-echo {
+    margin-bottom: 10px;
+  }
+  @media (max-width: 1020px) {
+    .lightStatus{
+      top: -250px;
+      left: 25%;
+    }
+    .chartStyle{
+      transform: translateY(220px);
+    }
+  }
+  @media(max-width:434px){
+    header#header.consumer{
+      height: 100px;
+    }
+    a#home-p{
+      transform: translateY(40px);
+    }
+    a#signOut{
+      transform: translateY(40px);
+    }
+    div#menu{
+      transform: translateY(120px);
+    }
+    .datetime-container{
+      transform: translate(-40px,-370px);
+
+    }
+    div#home.content{
+      transform: translateY(270px);
+    }
+    .temp-container{
+      transform: translate(-53px,-100px);
+    }
+    .lightStatus{
+      top: -250px;
+      left: 17%;
+    }
+}
+#empty{
+  height: 100px;
 }
 </style>
   <body>
@@ -144,6 +208,14 @@ if ($connection->connect_error) {
       if (mysqli_num_rows($result2) > 0) {
         $row2 = mysqli_fetch_assoc($result2);
       }
+
+      $sql3 = "SELECT degree FROM `thermostat` WHERE deviceid = 1";
+      $result3 = mysqli_query($connection, $sql3);
+      
+      if (mysqli_num_rows($result3) > 0) {
+        $row3 = mysqli_fetch_assoc($result3);
+      }
+
       // close
       $connection->close(); 
 ?>
@@ -154,7 +226,9 @@ if ($connection->connect_error) {
   var thermCons = <?php echo $row['ThermCons']; ?>;
   var ovenCons = <?php echo $row['OvenCons']; ?>;
   var vacuumCons = <?php echo $row['VacuumCons']; ?>;
-  var air_degree = <?php echo $row2['degree']; ?>
+  var air_degree = <?php echo $row2['degree']; ?>;
+  var therm_degree = <?php echo $row3['degree']; ?>;
+
 
 </script>
 
@@ -180,8 +254,52 @@ if ($connection->connect_error) {
             <h3 id="time"></h3>
             <h3 id="date"></h3>
           </div>
-          <div id="termometre"></div>
-          <div class="chartStyle" id="c1"><canvas id="myChart"></canvas>`;
+
+          <div class="temp-container">
+            <div class="temp" id="termometre"></div>
+            <div class="temp" id="therm_temp"></div>
+          </div>
+        
+          <div class="chartStyle" id="c1"><canvas id="myChart"></canvas>
+          
+          <div class="lightStatus">
+          <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT LivingRoom,Kitchen,Bedroom,Bathroom
+      FROM `lights`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='l-echo'> Living Room Status: ".$row['LivingRoom'] . "<br/><br /></div>"; 
+
+      echo "<div class='l-echo'> Kitchen Status: ".$row['Kitchen'] ."<br /><br /></div>"; 
+
+      echo "<div class='l-echo'> Bedroom Status: ".$row['Bedroom'] ."<br /><br /></div>";
+      
+      echo "<div class='l-echo'>Bathroom Status: ".$row['Bathroom'] ."<br /><br /></div>";
+      }
+      // close
+      $connection->close(); 
+      ?>
+         </div>
+         <div id="empty"></div>`;
 
      // change canvas element and create a graphic 
      var ctx = document.getElementById('myChart').getContext('2d');
@@ -288,7 +406,7 @@ if ($connection->connect_error) {
           .attr("y", 12)
           .attr("text-anchor", "middle")
           .style("font-size", "16px")
-          .text((degree + 0.5) + "°C");
+          .text("Home Temperature: "+degree+ "°C");
 
       // Degree scale
       var scaleHeight = height - 42;
@@ -322,11 +440,90 @@ if ($connection->connect_error) {
     drawTermometre(degree);
   }
   updateTemperature();
+  
+  function updatethermostatTemperature() {
+        var degree =<?php echo $row3['degree']; ?>; //degree from database
+        var step = 2; // change ratio
 
+      function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+      }
 
+      function updateDegree() {
+        degree += getRandomArbitrary(-step, step);
+        degree = Math.round(degree * 10) / 10; // 
+        return degree;
+      }
 
+      var width = 200;
+      var height = 300;
 
+      var svg = d3.select("#therm_temp")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
 
+    function drawTermometre(degree) {
+      var rectHeight = Math.max(((degree + 0.5) / 100) * (height - 42), 0);
+      svg.selectAll("*").remove();
+      
+      // outside
+      svg.append("rect")
+          .attr("x", width / 2 - 20)
+          .attr("y", 20)
+          .attr("width", 40)
+          .attr("height", height - 40)
+          .style("fill", "#ddd")
+          .style("stroke", "#999");
+
+      // inside
+      svg.append("rect")
+          .attr("x", width / 2 - 18)
+          .attr("y", height - 22 - rectHeight)
+          .attr("width", 36)
+          .attr("height", rectHeight)
+          .style("fill", "rgba(0, 123, 255, 0.7)");
+
+      // value of degree
+      svg.append("text")
+          .attr("x", width / 2)
+          .attr("y", 12)
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .text("Water Temperature: "+degree+ "°C");
+
+      // Degree scale
+      var scaleHeight = height - 42;
+      var scaleStep = scaleHeight / 10;
+
+      for (var i = 0; i <= 10; i++) {
+        var yPos = scaleHeight - i * scaleStep;
+
+        svg.append("line")
+          .attr("x1", width / 2 - 20)
+          .attr("y1", 20 + yPos)
+          .attr("x2", width / 2 - 10)
+          .attr("y2", 20 + yPos)
+          .style("stroke", "#999");
+
+        svg.append("text")
+          .attr("x", width / 2 - 30)
+          .attr("y", 24 + yPos)
+          .attr("text-anchor", "end")
+          .style("font-size", "12px")
+          .text((i * 10) + "°");
+    }
+      // update degree
+      degree = updateDegree();
+
+      //update
+      setTimeout(function() {
+        drawTermometre(degree);
+      }, 3000);
+    }
+    drawTermometre(degree);
+  }
+  updatethermostatTemperature();
 
 
   } else if (page === "Airconditioner") {
