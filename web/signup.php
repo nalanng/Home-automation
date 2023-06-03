@@ -1,3 +1,21 @@
+<?php
+  include("connection.php");
+
+  if(isset($_POST["signup"])) {
+    $name=$_POST["name"];
+    $email=$_POST["email"];
+    $phone=$_POST["phone"];
+    $password=$_POST["password"];
+    $password2=$_POST["password2"];
+
+    $add = "INSERT INTO consumerinfo (ConsumerNameSurname, ConsumerEmail,
+    ConsumerPhoneNumber, ConsumerPassword) VALUES ('$name','$email','$phone','$password')";
+    $start = mysqli_query($connection,$add);
+    
+    mysqli_close($connection);
+  }
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -76,14 +94,14 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-3">Create an account</h2>
 
-              <form>
+              <form action="signup.php" method="POST">
                 <div class="form-outline mb-3">
-                  <input type="text" id="form3Example1cg" class="form-control" />
+                  <input type="text" id="form3Example1cg" class="form-control" name="name" />
                   <label class="form-label" for="form3Example1cg">Your Name</label>
                 </div>
 
                 <div class="form-outline mb-3">
-                  <input type="email" id="form3Example3cg" class="form-control" />
+                  <input type="email" id="form3Example3cg" class="form-control" name="email" />
                   <label class="form-label" for="form3Example3cg">Your Email</label>
                 </div>
 
@@ -95,17 +113,17 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
                 
 
                 <div class="form-outline mb-3">
-                  <input type="password" id="form3Example4cg" class="form-control" />
+                  <input type="password" id="form3Example4cg" class="form-control" name="password" />
                   <label class="form-label" for="form3Example4cg">Password</label>
                 </div>
 
                 <div class="form-outline mb-3">
-                  <input type="password" id="form3Example4cdg" class="form-control" />
+                  <input type="password" id="form3Example4cdg" class="form-control" name="password2"/>
                   <label class="form-label" for="form3Example4cdg">Repeat your password</label>
                 </div>
 
                 <div class="d-flex justify-content-center">
-                  <button type="button"
+                  <button name="signup" type="submit" 
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign Up</button>
                 </div>
 
