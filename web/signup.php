@@ -1,18 +1,60 @@
 <?php
   include("connection.php");
 
+  $name_err=$email_err=$password_err=$phone_err=$password2_err="";
+
   if(isset($_POST["signup"])) {
-    $name=$_POST["name"];
-    $email=$_POST["email"];
-    $phone=$_POST["phone"];
-    $password=$_POST["password"];
-    $password2=$_POST["password2"];
+    if(empty($_POST["name"])) {
+      $name_err="Name is required!";
+    }
+    else if (preg_match('/^[a-z\d_]{5,20}$/i', $_POST["name"])) {
+      $name_err="Invalid characters!";
+    } 
+    else {
+      $name=$_POST["name"];
+    }
+    if(empty($_POST["email"])) {
+      $email_err="Password is required!";
+    }
+    else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+      $email_err = "Invalid email format";
+    }
+    else {
+      $email=$_POST["email"];
+    }
+    if(empty($_POST["phone"])) {
+      $phone_err="Phone is required!";
+    }
+    else {
+      $phone=$_POST["phone"];
+    }
+    if(empty($_POST["password"])) {
+      $password_err="Password is required!";
+    }
+    else if(strlen($_POST["password"])<3) {
+      $password_err="Password should be more than 3 characters!";
+    }
+    else {
+      $password=$_POST["password"];
+    }
+    if(empty($_POST["password2"])) {
+      $password2_err="Password is required!";
+    }
+    else if($_POST["password"]!=$_POST["password2"]) {
+      $password2_err="Passwords do not match";
+    }
+    else {
+      $password2=$_POST["password2"];
+    }
+    if(isset($name) && isset($email) && isset($phone) && isset($password)&& isset($password2)) {
+
 
     $add = "INSERT INTO consumerinfo (ConsumerNameSurname, ConsumerEmail,
     ConsumerPhoneNumber, ConsumerPassword) VALUES ('$name','$email','$phone','$password')";
     $start = mysqli_query($connection,$add);
-    
+
     mysqli_close($connection);
+  }
   }
 ?>
 
@@ -96,35 +138,76 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
 
               <form action="signup.php" method="POST">
                 <div class="form-outline mb-3">
-                  <input type="text" id="form3Example1cg" class="form-control" name="name" />
+                  <input type="text" id="validationCustom03" class="form-control" name="name" required />
                   <label class="form-label" for="form3Example1cg">Your Name</label>
+                  <?php
+                    if(!empty($name_err)) {
+                      echo "is-invalid";
+                    }
+                    ?>
+                    <?php
+                    echo $name_err;
+                    ?>
                 </div>
 
                 <div class="form-outline mb-3">
-                  <input type="email" id="form3Example3cg" class="form-control" name="email" />
+                  <input type="email" id="validationCustom03" class="form-control" name="email" required/>
                   <label class="form-label" for="form3Example3cg">Your Email</label>
+                  <?php
+                    if(!empty($email_err)) {
+                      echo "is-invalid";
+                    }
+                    ?>
+                  <?php
+                    echo $email_err;
+                    ?>
                 </div>
 
                 <div class="form-outline mb-3">
-                <input type="tel" id="phone" name="phone" id="form3Example1cg" class="form-control" 
+                <input type="tel" id="phone" name="phone" id="validationCustom03" class="form-control required" 
                 placeholder="5xx-xxx-xx-xx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}" required>
                 <label class="form-label" for="form3Example1cg">Phone Number</label>
+                <?php
+                    if(!empty($phone_err)) {
+                      echo "is-invalid";
+                    }
+                    ?>
+                  <?php
+                    echo $phone_err;
+                    ?>
                 </div>
                 
 
                 <div class="form-outline mb-3">
-                  <input type="password" id="form3Example4cg" class="form-control" name="password" />
+                  <input type="password" id="validationCustom03" class="form-control" name="password" required />
                   <label class="form-label" for="form3Example4cg">Password</label>
+                  <?php
+                    if(!empty($password_err)) {
+                      echo "is-invalid";
+                    }
+                    ?>
+                  <?php
+                    echo $password_err;
+                    ?>
                 </div>
 
                 <div class="form-outline mb-3">
-                  <input type="password" id="form3Example4cdg" class="form-control" name="password2"/>
+                  <input type="password" id="validationCustom03" class="form-control" name="password2" required/>
                   <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                  <?php
+                    if(!empty($password2_err)) {
+                      echo "is-invalid";
+                    }
+                    ?>
+                  <?php
+                    echo $password2_err;
+                    ?>
                 </div>
 
                 <div class="d-flex justify-content-center">
                   <button name="signup" type="submit" 
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign Up</button>
+                    
                 </div>
 
                 <p class="text-center text-muted mt-4 mb-0">Have already an account? <a href="login.php"
