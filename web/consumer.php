@@ -93,6 +93,53 @@ div#consumption-p.content{
         </li>
       </ul>
     </div>
+
+
+<script>
+<?php
+// database connetion
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT AirCons, AlarmCons, LightCons, ThermCons, OvenCons, VacuumCons
+              FROM `Consumption` 
+              WHERE ConsumptionID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+      $row = mysqli_fetch_assoc($result);
+      }
+
+      $sql2 = "SELECT degree FROM `airconditioner` WHERE deviceid = 1";
+      $result2 = mysqli_query($connection, $sql2);
+      
+      if (mysqli_num_rows($result2) > 0) {
+        $row2 = mysqli_fetch_assoc($result2);
+      }
+      // close
+      $connection->close(); 
+?>
+
+  var airCons = <?php echo $row['AirCons']; ?>;
+  var alarmCons = <?php echo $row['AlarmCons']; ?>;
+  var lightCons = <?php echo $row['LightCons']; ?>;
+  var thermCons = <?php echo $row['ThermCons']; ?>;
+  var ovenCons = <?php echo $row['OvenCons']; ?>;
+  var vacuumCons = <?php echo $row['VacuumCons']; ?>;
+  var air_degree = <?php echo $row2['degree']; ?>
+
+</script>
+
     <div class="content" id="home"></div>
     <div class="content" id="airconditioner"></div>
     <div class="content" id="alarm"></div>
@@ -102,7 +149,8 @@ div#consumption-p.content{
     <div class="content" id="vacuum"></div>
     <div class="content" id="consumption-p"></div>
 
-    <script>
+<script>
+
       var currentContent = null;
 
       function loadContent(page) {
