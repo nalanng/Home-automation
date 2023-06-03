@@ -127,6 +127,12 @@ div.content {
     width: 70%;
     top: 480px;
   }
+  #blind-p {
+    font-size: 35px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(143, 211, 244, 0.5);
+  }
   /* for oven content */
   div#oven.content {
     width: 70%;
