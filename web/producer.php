@@ -52,6 +52,18 @@ h1#g1.g1-style {
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(143, 211, 244, 0.5);
   }
+  #oven-p {
+    font-size: 35px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(143, 211, 244, 0.5);
+  }
+  #thermostat-p {
+    font-size: 35px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(143, 211, 244, 0.5);
+  }
 div#consumption-p.content{
   padding: 20px;
 }
@@ -234,10 +246,102 @@ if ($connection->connect_error) {
   `;
         } else if (page === "Oven") {
           contentDiv = document.getElementById("oven");
-          contentDiv.innerHTML = "d";
+          contentDiv.innerHTML = `
+          <?php
+// Database Connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT *
+              FROM `oven` 
+              WHERE ConsumptionID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+
+      }
+    
+      ?>
+          <h1 class="g1-style mb-5" id="g1">OVEN</h1>
+      <div class="g1-style mb-5" id="g2">
+        <p id="oven-p"
+          style="font-size: xx-large"
+        >
+          Oven is "<?php echo $row['State'] ?>"
+        </p>
+      </div>
+        <div class="g1-style mb-5" id="g4">
+        <p id="oven-p"
+          style="font-size: xx-large"
+        >
+          Oven is turned on with the program "<?php echo $row['Program'] ?>"
+        </p>
+        </div>
+        <div class="g1-style mb-5" id="g5">
+        <p id="oven-p"
+          style="font-size: xx-large"
+        >
+        Oven is turned on with the degree "<?php echo $row['Degree'] ?>"
+        </p>
+        </div>
+      </div>`;
         } else if (page === "Thermostat") {
           contentDiv = document.getElementById("thermostat");
-          contentDiv.innerHTML = "e";
+          contentDiv.innerHTML = `
+          <?php
+// Database Connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT *
+              FROM `thermostat` 
+              WHERE ConsumptionID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+
+      }
+    
+      ?>
+          <h1 class="g1-style mb-5" id="g1">THERMOSTAT</h1>
+      <div class="g1-style mb-5" id="g2">
+      <p id="thermostat-p">Thermostat is "<?php echo $row['State'] ?>" </p>
+      </div>
+      <div class="g1-style mb-5" id="g">
+        <div class="alarm-style mb-5" id="g3">
+        <p id="thermostat-p">Thermostat' degree is set to "<?php echo $row['Degree'] ?>" </p>
+        </div>
+        <div class="g1-style mb-5" id="g4">
+        <p id="thermostat-p">Thermostat's mode is set to"<?php echo $row['Mode'] ?>" </p>
+        </div>
+        <div class="g1-style mb-5" id="g5">
+        <p id="thermostat-p">Thermostat's water level is"<?php echo $row['WaterLevel'] ?>" </p>
+        </div>
+      </div>`;
         } else if (page === "Vacuum") {
           contentDiv = document.getElementById("vacuum");
           contentDiv.innerHTML = "f";
