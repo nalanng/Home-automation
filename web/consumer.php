@@ -66,7 +66,7 @@ div.chartStyle {
           <a href="#" id="logo">SNautomation</a>
         </li>
         <li><a href="#" id="home-p" onclick="loadContent('Home')">Home </a></li>
-        <li><a href="#" id="signOut">Sign Out</a></li>
+        <li><a href="homepage.php" id="signOut">Sign Out</a></li>
       </ul>
     </header>
 

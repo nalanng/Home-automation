@@ -1,3 +1,37 @@
+<?php
+  include("connection.php");
+
+  $email=$password=$email_err=$password_err="";
+
+  if(isset($_POST["signin"])) {
+    if(empty($_POST["email"])) {
+      $email_err="Email is required!";
+    }
+    else {
+      $email=$_POST["email"];
+    }
+    if(empty($_POST["password"])) {
+      $password_err="Password is required!";
+    }
+    else {
+      $password=$_POST["password"];
+    }
+   
+    if(isset($email) && isset($password)) {
+      $select = "SELECT * FROM consumerinfo WHERE ConsumerEmail='$email'";
+      $start = mysqli_query($connection,$select);
+
+      if (mysqli_num_rows($start) > 0) { 
+        $row = mysqli_fetch_assoc($start);
+
+        if($password==$row["ConsumerPassword"]) {
+          header("location:consumer.php");
+        }
+      }
+    mysqli_close($connection);
+  }
+}
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -95,18 +129,38 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Please Sign In AS CONSUMER</h2>
 
-              <form>
+              <form action="login_c.php" method="POST">
                 <div class="form-outline mb-3">
-                  <input type="email" id="form3Example3cg" class="form-control" />
-                  <label class="form-label" for="form3Example3cg">Your Email</label>
+                <label class="form-label" for="form3Example1cg">E-mail</label>
+                  <input type="text" id="validationCustom03" class="form-control
+                  <?php
+                    if(!empty($email_err)) {
+                      echo "is-invalid";
+                    }
+                    ?>" name="email"/>
+                    <div class="invalid-feedback">
+                    <?php
+                    echo $email_err;
+                    ?>
+                    </div>
                 </div>
                 <div class="form-outline mb-3">
-                  <input type="password" id="form3Example4cg" class="form-control" />
-                  <label class="form-label" for="form3Example4cg">Password</label>
+                <label class="form-label" for="form3Example4cg">Password</label>
+                  <input type="password" id="validationCustom03" class="form-control
+                  <?php
+                    if(!empty($password_err)) {
+                      echo "is-invalid";
+                    }
+                    ?>" name="password" />
+                     <div class="invalid-feedback">
+                    <?php
+                    echo $password_err;
+                    ?>
+                    </div>
                 </div>
 
                 <div class="d-flex justify-content-center">
-                  <button type="button"
+                  <button type="submit" name="signin"
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign In</button>
                 </div>
 

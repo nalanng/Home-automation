@@ -1,6 +1,6 @@
 <?php
   include("connection.php");
-
+  $name=$email=$password=$phone=$password2="";
   $name_err=$email_err=$password_err=$phone_err=$password2_err="";
 
   if(isset($_POST["signup"])) {
@@ -14,7 +14,7 @@
       $name=$_POST["name"];
     }
     if(empty($_POST["email"])) {
-      $email_err="Password is required!";
+      $email_err="Email is required!";
     }
     else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
       $email_err = "Invalid email format";
@@ -46,15 +46,16 @@
     else {
       $password2=$_POST["password2"];
     }
-    if(isset($name) && isset($email) && isset($phone) && isset($password)&& isset($password2)) {
-
-
-    $add = "INSERT INTO consumerinfo (ConsumerNameSurname, ConsumerEmail,
-    ConsumerPhoneNumber, ConsumerPassword) VALUES ('$name','$email','$phone','$password')";
-    $start = mysqli_query($connection,$add);
-
-    mysqli_close($connection);
-  }
+    if(!(empty($_POST["name"])) && !(empty($_POST["email"]))&& !(empty($_POST["phone"]))&& !(empty($_POST["password"]))&& !(empty($_POST["password2"])) ) {
+      if(isset($name) && isset($email) && isset($phone) && isset($password)&& isset($password2)) {
+        $add = "INSERT INTO consumerinfo (ConsumerNameSurname, ConsumerEmail,
+        ConsumerPhoneNumber, ConsumerPassword) VALUES ('$name','$email','$phone','$password')";
+        $start = mysqli_query($connection,$add);
+    
+        mysqli_close($connection);
+      }
+    }
+  
   }
 ?>
 
@@ -138,73 +139,84 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
 
               <form action="signup.php" method="POST">
                 <div class="form-outline mb-3">
-                  <input type="text" id="validationCustom03" class="form-control" name="name" required />
-                  <label class="form-label" for="form3Example1cg">Your Name</label>
+                <label class="form-label" for="form3Example1cg">Your Name</label>
+                  <input type="text" id="validationCustom03" class="form-control
                   <?php
                     if(!empty($name_err)) {
                       echo "is-invalid";
                     }
-                    ?>
+                    ?>" name="name"/>
+                    <div class="invalid-feedback">
                     <?php
                     echo $name_err;
                     ?>
-                </div>
+                    </div>
 
                 <div class="form-outline mb-3">
-                  <input type="email" id="validationCustom03" class="form-control" name="email" required/>
-                  <label class="form-label" for="form3Example3cg">Your Email</label>
+                <label class="form-label" for="form3Example3cg">Your Email</label>
+                  <input type="email" id="validationCustom03" class="form-control  
                   <?php
                     if(!empty($email_err)) {
                       echo "is-invalid";
                     }
-                    ?>
-                  <?php
+                    ?>" 
+                    name="email" />
+                    <div class="invalid-feedback">
+                    <?php
                     echo $email_err;
                     ?>
+                    </div>
                 </div>
 
                 <div class="form-outline mb-3">
-                <input type="tel" id="phone" name="phone" id="validationCustom03" class="form-control required" 
-                placeholder="5xx-xxx-xx-xx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}" required>
                 <label class="form-label" for="form3Example1cg">Phone Number</label>
+                <input type="tel" id="phone" name="phone" id="validationCustom03" class="form-control
                 <?php
                     if(!empty($phone_err)) {
                       echo "is-invalid";
                     }
-                    ?>
-                  <?php
+                    ?>" 
+                placeholder="5xx-xxx-xx-xx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}">
+                <div class="invalid-feedback">
+                    <?php
                     echo $phone_err;
                     ?>
+                    </div>
                 </div>
                 
 
                 <div class="form-outline mb-3">
-                  <input type="password" id="validationCustom03" class="form-control" name="password" required />
-                  <label class="form-label" for="form3Example4cg">Password</label>
+                <label class="form-label" for="form3Example4cg">Password</label>
+                  <input type="password" id="validationCustom03" class="form-control 
                   <?php
                     if(!empty($password_err)) {
                       echo "is-invalid";
                     }
-                    ?>
-                  <?php
+                    ?>" name="password"  />
+                 <div class="invalid-feedback">
+                    <?php
                     echo $password_err;
                     ?>
+                    </div>
+                 
                 </div>
 
-                <div class="form-outline mb-3">
-                  <input type="password" id="validationCustom03" class="form-control" name="password2" required/>
-                  <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                <div class="form-outline mb-3 mt-4">
+                <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                  <input type="password" id="validationCustom03" class="form-control
                   <?php
                     if(!empty($password2_err)) {
                       echo "is-invalid";
                     }
-                    ?>
-                  <?php
+                    ?>" name="password2"/>
+                  <div class="invalid-feedback">
+                    <?php
                     echo $password2_err;
                     ?>
+                    
                 </div>
 
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center mb-3 mt-5">
                   <button name="signup" type="submit" 
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Sign Up</button>
                     
