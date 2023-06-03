@@ -243,6 +243,12 @@ div.g2-style button {
     width: 70%;
     top: 480px;
   }
+
+  /* for home content */
+  div#home.content {
+    width: 70%;
+    top: 480px;
+  }
 }
 
 @media (max-width: 434px) {

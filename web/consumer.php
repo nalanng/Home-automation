@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE php>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,8 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="consumer.css" />
-  </head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    </head>
+<style>
+@media(min-width :900px){
+  div#consumption-p.content {
+  width: 40%;
+  transform: translateX(-50%);
+  }
+}
+@media(max-width:434px){
+  div.content{ 
+    transform: translateX(8%);
+   }
+}
+h1#g1.g1-style {
+  text-align: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+}
+  .echo {
+  text-align: center;
+  font-size: xx-large;
+  transform: translateY(15px);
+}
+#total{
+  border-top: 1px solid black;
+  padding-top: 25px;
+  color: #ad1010;
+  font-weight: bold;
 
+}
+div#consumption-p.content{
+  padding: 20px;
+}
+div.chartStyle {
+  height: 280;
+}
+.datetime-container {
+  position: fixed;
+  top: 75px;
+  right: 65px;
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+  }    
+
+.thermometer {
+  display: inline-block;
+  width: 100px;
+  height: 300px;
+}
+</style>
   <body>
     <header class="consumer" id="header">
       <ul>
@@ -60,6 +111,53 @@
         </li>
       </ul>
     </div>
+
+
+<script>
+<?php
+// database connetion
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT AirCons, AlarmCons, LightCons, ThermCons, OvenCons, VacuumCons
+              FROM `Consumption` 
+              WHERE ConsumptionID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+      $row = mysqli_fetch_assoc($result);
+      }
+
+      $sql2 = "SELECT degree FROM `airconditioner` WHERE deviceid = 1";
+      $result2 = mysqli_query($connection, $sql2);
+      
+      if (mysqli_num_rows($result2) > 0) {
+        $row2 = mysqli_fetch_assoc($result2);
+      }
+      // close
+      $connection->close(); 
+?>
+
+  var airCons = <?php echo $row['AirCons']; ?>;
+  var alarmCons = <?php echo $row['AlarmCons']; ?>;
+  var lightCons = <?php echo $row['LightCons']; ?>;
+  var thermCons = <?php echo $row['ThermCons']; ?>;
+  var ovenCons = <?php echo $row['OvenCons']; ?>;
+  var vacuumCons = <?php echo $row['VacuumCons']; ?>;
+  var air_degree = <?php echo $row2['degree']; ?>
+
+</script>
+
     <div class="content" id="home"></div>
     <div class="content" id="airconditioner"></div>
     <div class="content" id="alarm"></div>
@@ -69,15 +167,169 @@
     <div class="content" id="vacuum"></div>
     <div class="content" id="consumption-p"></div>
 
-    <script>
+<script>
+
       var currentContent = null;
 
       function loadContent(page) {
         var contentDiv;
         if (page === "Home") {
           contentDiv = document.getElementById("home");
-          contentDiv.innerHTML = "aaaaa";
-        } else if (page === "Airconditioner") {
+          contentDiv.innerHTML = `
+          <div class="datetime-container">
+            <h3 id="time"></h3>
+            <h3 id="date"></h3>
+          </div>
+          <div id="termometre"></div>
+          <div class="chartStyle" id="c1"><canvas id="myChart"></canvas>`;
+
+     // change canvas element and create a graphic 
+     var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', 
+            data: {
+                labels: ['Air Conditioner', 'Alarm System', 'Lights', 'Thermostat', 'Oven', 'Vacuum Cleaner'], // title of datas
+                datasets: [{
+                    label: 'Device Consumption', // title of bar
+                    data: [airCons, alarmCons, lightCons, thermCons, ovenCons, vacuumCons], // datas for y axis
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)', 
+                    borderColor: 'rgba(0, 123, 255, 1)', 
+                    borderWidth: 1 
+                }]
+            },
+            options: {
+                responsive: true, 
+                scales: {
+                    y: {
+                        beginAtZero: true // y axis start 0
+                    }
+                }
+            }
+        });
+      
+
+      function updateDateTime() {
+        var currentDate = new Date(); // the current time and date
+
+        var year = currentDate.getFullYear(); // take years
+        var month = currentDate.getMonth() + 1; // Take months 
+        var day = currentDate.getDate(); // take day
+
+        var hour = currentDate.getHours(); // take hours
+        var minute = currentDate.getMinutes(); // take minutes
+        var second = currentDate.getSeconds(); // take seconds
+
+        var formattedDate = day.toString().padStart(2, '0') + '/' +
+                            month.toString().padStart(2, '0') + '/' +
+                            year;
+
+        var formattedTime = hour.toString().padStart(2, '0') + ':' +
+                            minute.toString().padStart(2, '0') + ':' +
+                            second.toString().padStart(2, '0');
+
+        document.getElementById('date').textContent = "Tarih: " + formattedDate; // update date
+        document.getElementById('time').textContent = "Saat: " + formattedTime; // update time
+      }
+
+      //  date and time change, when page open
+      updateDateTime();
+
+      // update time and date per one second
+      setInterval(updateDateTime, 1000);
+
+  
+      function updateTemperature() {
+        var degree =<?php echo $row2['degree']; ?>; //degree from database
+        var step = 0.5; // change ratio
+
+      function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function updateDegree() {
+        degree += getRandomArbitrary(-step, step);
+        degree = Math.round(degree * 10) / 10; // 
+        return degree;
+      }
+
+      var width = 200;
+      var height = 300;
+      var maxTemperature = 60;
+
+      var svg = d3.select("#termometre")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+
+    function drawTermometre(degree) {
+      var rectHeight = Math.max(((degree + 0.5) / 100) * (height - 42), 0);
+      svg.selectAll("*").remove();
+      
+      // outside
+      svg.append("rect")
+          .attr("x", width / 2 - 20)
+          .attr("y", 20)
+          .attr("width", 40)
+          .attr("height", height - 40)
+          .style("fill", "#ddd")
+          .style("stroke", "#999");
+
+      // inside
+      svg.append("rect")
+          .attr("x", width / 2 - 18)
+          .attr("y", height - 22 - rectHeight)
+          .attr("width", 36)
+          .attr("height", rectHeight)
+          .style("fill", "rgba(0, 123, 255, 0.7)");
+
+      // value of degree
+      svg.append("text")
+          .attr("x", width / 2)
+          .attr("y", 12)
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .text((degree + 0.5) + "°C");
+
+      // Degree scale
+      var scaleHeight = height - 42;
+      var scaleStep = scaleHeight / 10;
+
+      for (var i = 0; i <= 10; i++) {
+        var yPos = scaleHeight - i * scaleStep;
+
+        svg.append("line")
+          .attr("x1", width / 2 - 20)
+          .attr("y1", 20 + yPos)
+          .attr("x2", width / 2 - 10)
+          .attr("y2", 20 + yPos)
+          .style("stroke", "#999");
+
+        svg.append("text")
+          .attr("x", width / 2 - 30)
+          .attr("y", 24 + yPos)
+          .attr("text-anchor", "end")
+          .style("font-size", "12px")
+          .text((i * 10) + "°");
+    }
+      // update degree
+      degree = updateDegree();
+
+      //update
+      setTimeout(function() {
+        drawTermometre(degree);
+      }, 1000);
+    }
+    drawTermometre(degree);
+  }
+  updateTemperature();
+
+
+
+
+
+
+
+  } else if (page === "Airconditioner") {
           contentDiv = document.getElementById("airconditioner");
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">AIR CONDITIONER</h1>
@@ -273,10 +525,56 @@
           contentDiv = document.getElementById("consumption-p");
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">CONSUMPTION</h1>
+      <div id="consumption-text">
+      <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT AirCons, AlarmCons, LightCons, ThermCons, OvenCons, VacuumCons
+              FROM `Consumption` 
+              WHERE ConsumptionID=1"; 
       
-      </div>
-      `;
-        }
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='echo'> Air Condition Consumption: ".$row['AirCons'] . "<br/><br /></div>"; 
+
+      echo "<div class='echo'> Alarm System Consumption: ".$row['AlarmCons'] ."<br /><br /></div>"; 
+
+      echo "<div class='echo'> Lights Consumption: ".$row['LightCons'] ."<br /><br /></div>";
+      
+      echo "<div class='echo'>Thermostat Consumption: ".$row['ThermCons'] ."<br /><br /></div>";
+
+      echo "<div class='echo'> Oven Consumption: ".$row['OvenCons'] ."<br /><br /></div>";
+
+      echo "<div class='echo'> Vacuum Cleaning Consumption: ".$row['VacuumCons'] ."<br /><br /></div>";
+
+      //total concumption
+      $total = $row['AirCons'] + $row['AlarmCons'] + $row['LightCons'] + $row['ThermCons'] + $row['OvenCons'] + $row['VacuumCons'];
+  echo "<div class='echo' id='total'> Total Consumption: " . $total . "</div>";
+    } else {
+         echo "Sonuç bulunamadı."; } 
+      
+      // close
+      $connection->close(); 
+      ?>
+      </div>`;
+      
+    }
+
         // hidden older content.
         if (currentContent !== null) {
           currentContent.style.display = "none";
@@ -286,7 +584,7 @@
         contentDiv.style.display = "block";
         currentContent = contentDiv;
       }
-
+      loadContent("Home");
       // Here we get our variables by their id's to use in the functions
       var btn1 = document.getElementById("onoffbutton");
       var btn2 = document.getElementById("button");
@@ -342,4 +640,4 @@
       }
     </script>
   </body>
-</html>
+    </php>

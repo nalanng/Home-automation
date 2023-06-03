@@ -2,9 +2,10 @@
 
 body {
   margin: 0;
+  background-color: rgb(255, 252, 248);
 }
 
-/* heaader */
+/* header */
 
 header#header.producer {
   border-bottom: 1px solid rgba(89, 237, 200, 0.4);
@@ -35,16 +36,24 @@ header#header.producer a#signOut {
   border-radius: 20px;
   top: 15px;
 }
+header#header.producer a#home-p {
+  position: absolute;
+  right: 170px;
+  border: 1px solid rgba(0, 0, 0, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 15px;
+}
 
 /* menu */
 
 div#menu {
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  width: 20%;
   left: -20px;
+  top: 30%;
   margin-top: 10px;
   text-align: center;
-  border-bottom: 1px solid rgba(89, 237, 200, 0.4);
 }
 div.list {
   display: inline-block;
@@ -61,7 +70,7 @@ div#menu li {
   margin: 0 10px;
 }
 div#consumption.list {
-  border: 1px solid rgba(205, 246, 236, 0.907);
+  border: 1px solid rgba(0, 0, 0, 0.907);
   background-color: rgba(155, 238, 241, 0.907);
 }
 div#menu a {
@@ -70,12 +79,23 @@ div#menu a {
   padding: 5px;
   color: #000;
 }
+@media (max-width: 605px) and (min-width: 434px) {
+  div#menu {
+    position: absolute;
+    width: 100%;
+    top: 180px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
 
 /* content */
 
-div#content {
+div.content {
   position: absolute;
-  top: 200px;
+  width: 70%;
+  right: 70px;
+  top: 140px;
 }
 
 @media (max-width: 1407px) {
@@ -85,22 +105,63 @@ div#content {
   }
 }
 
-@media (max-width: 809px) {
-  div#content {
-    position: absolute;
-    top: 295px;
+@media (max-width: 1020px) {
+  div.content {
+    width: 50%;
   }
 }
 
-@media (max-width: 613px) {
-  div#content {
-    position: absolute;
-    top: 340px;
+@media (max-width: 606px) {
+  /* for air conditioner content */
+  div#airconditioner.content {
+    width: 70%;
+    top: 480px;
+  }
+  /* for alarm system content */
+  div#alarm.content {
+    width: 70%;
+    top: 480px;
+  }
+  /* for blinds content */
+  div#blinds.content {
+    width: 70%;
+    top: 480px;
+  }
+  /* for oven content */
+  div#oven.content {
+    width: 70%;
+    top: 480px;
+  }
+  /* for thermostat content */
+  div#thermostat.content {
+    width: 70%;
+    top: 480px;
+  }
+  /* for vacuum cleaner content */
+  div#vacuum.content {
+    width: 70%;
+    top: 480px;
+  }
+
+  /* for consumption info content */
+  div#consumption-p.content {
+    width: 70%;
+    top: 480px;
+  }
+
+  /* for home content */
+  div#home.content {
+    width: 70%;
+    top: 480px;
   }
 }
-@media (max-width: 417px) {
-  div#content {
+
+@media (max-width: 434px) {
+  div#menu {
     position: absolute;
-    top: 485px;
+    width: 100%;
+    top: 100px;
+    margin-top: 10px;
+    text-align: center;
   }
 }
