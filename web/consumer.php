@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="consumer.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     </head>
 <style>
 @media(min-width :900px){
@@ -52,6 +53,11 @@ div.chartStyle {
   text-align: center;
   }    
 
+.thermometer {
+  display: inline-block;
+  width: 100px;
+  height: 300px;
+}
 </style>
   <body>
     <header class="consumer" id="header">
@@ -232,6 +238,98 @@ if ($connection->connect_error) {
       setInterval(updateDateTime, 1000);
 
   
+      function updateTemperature() {
+        var degree =<?php echo $row2['degree']; ?>; //degree from database
+        var step = 0.5; // change ratio
+
+      function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function updateDegree() {
+        degree += getRandomArbitrary(-step, step);
+        degree = Math.round(degree * 10) / 10; // 
+        return degree;
+      }
+
+      var width = 200;
+      var height = 300;
+      var maxTemperature = 60;
+
+      var svg = d3.select("#termometre")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+
+    function drawTermometre(degree) {
+      var rectHeight = Math.max(((degree + 0.5) / 100) * (height - 42), 0);
+      svg.selectAll("*").remove();
+      
+      // outside
+      svg.append("rect")
+          .attr("x", width / 2 - 20)
+          .attr("y", 20)
+          .attr("width", 40)
+          .attr("height", height - 40)
+          .style("fill", "#ddd")
+          .style("stroke", "#999");
+
+      // inside
+      svg.append("rect")
+          .attr("x", width / 2 - 18)
+          .attr("y", height - 22 - rectHeight)
+          .attr("width", 36)
+          .attr("height", rectHeight)
+          .style("fill", "rgba(0, 123, 255, 0.7)");
+
+      // value of degree
+      svg.append("text")
+          .attr("x", width / 2)
+          .attr("y", 12)
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .text((degree + 0.5) + "°C");
+
+      // Degree scale
+      var scaleHeight = height - 42;
+      var scaleStep = scaleHeight / 10;
+
+      for (var i = 0; i <= 10; i++) {
+        var yPos = scaleHeight - i * scaleStep;
+
+        svg.append("line")
+          .attr("x1", width / 2 - 20)
+          .attr("y1", 20 + yPos)
+          .attr("x2", width / 2 - 10)
+          .attr("y2", 20 + yPos)
+          .style("stroke", "#999");
+
+        svg.append("text")
+          .attr("x", width / 2 - 30)
+          .attr("y", 24 + yPos)
+          .attr("text-anchor", "end")
+          .style("font-size", "12px")
+          .text((i * 10) + "°");
+    }
+      // update degree
+      degree = updateDegree();
+
+      //update
+      setTimeout(function() {
+        drawTermometre(degree);
+      }, 1000);
+    }
+    drawTermometre(degree);
+  }
+  updateTemperature();
+
+
+
+
+
+
+
+  } else if (page === "Airconditioner") {
           contentDiv = document.getElementById("airconditioner");
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">AIR CONDITIONER</h1>
