@@ -224,11 +224,7 @@ if ($connection->connect_error) {
 
 <?php
 
-
-// Cihazların durumlarını güncelleyen fonksiyon
-function updateDeviceState($tableName, $deviceID, &$state, &$buttonText) {
-
-  $host = "localhost";
+$host = "localhost";
 $db = "web-home-automation";
 $user = "root";
 $password = "";
@@ -238,6 +234,11 @@ $baglanti = new mysqli($host, $user, $password, $db);
 if ($baglanti->connect_error) {
   die("MySQL bağlantı hatası: " . $baglanti->connect_error);
 }
+
+// Cihazların durumlarını güncelleyen fonksiyon
+function updateDeviceState($tableName, $deviceID, &$state, &$buttonText) {    session_start();
+
+  global $baglanti;
 
   $query = "SELECT state FROM $tableName WHERE DeviceID = $deviceID";
   $result = $baglanti->query($query);
@@ -273,33 +274,130 @@ if ($baglanti->connect_error) {
     } else {
       echo "Durum güncelleme hatası: " . $baglanti->error;
     }
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
   }
 }
 
 // Air Conditioner
 $airConditionerState = "";
 $airConditionerButtonText = "";
-updateDeviceState("airconditioner", 1, $airConditionerState, $airConditionerButtonText);
-
+if (isset($_POST['airconditioner'])) {
+  updateDeviceState("airconditioner", 1, $airConditionerState, $airConditionerButtonText);
+}
 // Alarm
 $alarmState = "";
 $alarmButtonText = "";
-updateDeviceState("alarm", 1, $alarmState, $alarmButtonText);
-
+if (isset($_POST['alarm'])) {
+  updateDeviceState("alarm", 1, $alarmState, $alarmButtonText);
+}
 // Oven
 $ovenState = "";
 $ovenButtonText = "";
-updateDeviceState("oven", 1, $ovenState, $ovenButtonText);
-
+if (isset($_POST['oven'])) {
+  updateDeviceState("oven", 1, $ovenState, $ovenButtonText);
+}
 // Thermostat
 $thermostatState = "";
 $thermostatButtonText = "";
-updateDeviceState("thermostat", 1, $thermostatState, $thermostatButtonText);
+if (isset($_POST['thermostat'])) {
+  updateDeviceState("thermostat", 1, $thermostatState, $thermostatButtonText);
+}
 
 // Vacuum Cleaner
 $vacuumCleanerState = "";
 $vacuumCleanerButtonText = "";
-updateDeviceState("vacuumcleaner", 1, $vacuumCleanerState, $vacuumCleanerButtonText);
+if (isset($_POST['vacuumcleaner'])) {
+  updateDeviceState("vacuumcleaner", 1, $vacuumCleanerState, $vacuumCleanerButtonText);
+}
+
+?>
+
+<?php
+
+$host = "localhost";
+$db = "web-home-automation";
+$user = "root";
+$password = "";
+
+$baglanti = new mysqli($host, $user, $password, $db);
+
+if ($baglanti->connect_error) {
+  die("MySQL bağlantı hatası: " . $baglanti->connect_error);
+}
+
+//Lights
+  function updateLightsState($columnname, &$state, &$buttonText) {
+  session_start();
+  global $baglanti;
+
+  $query = "SELECT `$columnname` FROM `lights` WHERE DeviceID = 1";
+  $result = $baglanti->query($query);
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $state = $row[$columnname];
+  } else {
+    $state = "Off";
+  }
+
+  if ($state === "On") {
+    $buttonText = "TURN OFF";
+  } else {
+    $buttonText = "TURN ON";
+  }
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($state === "On") {
+      $newState = "Off";
+    } else {
+      $newState = "On";
+    }
+
+    $updateQuery = "UPDATE `lights` SET `$columnname`='$newState' WHERE DeviceID = 1";
+    if ($baglanti->query($updateQuery) === TRUE) {
+      $state = $newState;
+      if ($state === "On") {
+        $buttonText = "TURN OFF";
+      } else {
+        $buttonText = "TURN ON";
+      }
+    } else {
+      echo "ERROR: " . $baglanti->error;
+    }
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+  }
+}
+
+
+// Living Room
+$LivingRoomState = "";
+$livingRoomText = "";
+if (isset($_POST['livingRoom'])) {
+  updateLightsState("livingRoom", $LivingRoomState, $livingRoomText);
+}
+
+// Kitchen
+$KitchenState = "";
+$KitchenText = "";
+if (isset($_POST['Kitchen'])) {
+  updateLightsState("Kitchen", $KitchenState, $KitchenText);
+}
+
+// Bedroom
+$BedroomState = "";
+$BedroomText = "";
+if (isset($_POST['Bedroom'])) {
+  updateLightsState("Bedroom", $BedroomState, $BedroomText);
+}
+
+// Bathroom
+$BathroomState = "";
+$BathroomText = "";
+if (isset($_POST['Bathroom'])) {
+  updateLightsState("Bathroom", $BathroomState, $BathroomText);
+}
 
 ?>
 
@@ -616,8 +714,38 @@ if ($connection->connect_error) {
       <h1 class="g1-style" id="g1">AIR CONDITIONER</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-    <button type="submit" name="airConditioner"><?php echo $airConditionerButtonText; ?></button>
+    <button type="submit" name="airconditioner"><?php echo $airConditionerButtonText; ?></button>
   </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT State
+      FROM `airconditioner`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='l-echo'> Airconditioner Status: ".$row['State'] . "<br/>To change please click the button.<br /></div>"; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
       </div>
       <div class="g1-style" id="g">
         <div class="g1-style" id="g3">
@@ -648,7 +776,38 @@ if ($connection->connect_error) {
       <div class="g1-style" id="g2">
       <form method="POST" action="">
     <button type="submit" name="alarm"><?php echo $alarmButtonText; ?></button>
-  </form>     </div>
+  </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT State
+      FROM `alarm`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='l-echo'> Alarm System Status: ".$row['State'] . "<br/>To change please click the button.<br /></div>"; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
+       </div>
       <div class="g1-style" id="g">
         <div class="g1-style" id="g3">
           <p id="mode">The door is locked</p>
@@ -667,26 +826,150 @@ if ($connection->connect_error) {
 <div id="g2-">
   <div id="g2-3" class="g2-style">
     <div>
-    ***************
-          <div><p style="font-size: medium;">Living Room</p></div>
+    <form method="POST" action="">
+    <button type="submit" name="LivingRoom"><?php echo $livingRoomText; ?></button>
+  </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT LivingRoom
+      FROM `lights`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "Living Room State: ".$row['LivingRoom'] . "<br/>To change please click the button."; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
     </div>
   </div>
   <div id="g2-4" class="g2-style">
     <div>
-    ***************
-          <div><p style="font-size: medium;">Kitchen</p></div>
+    <form method="POST" action="">
+    <button type="submit" name="Kitchen"><?php echo $KitchenText; ?></button>
+  </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT Kitchen
+      FROM `lights`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "Kitchen State: ".$row['Kitchen'] . "<br/>To change please click the button."; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
     </div>
   </div>
   <div id="g2-5" class="g2-style">
     <div>
-    ***************
-          <div><p style="font-size: medium;">Bedroom</p></div>
+    <form method="POST" action="">
+    <button type="submit" name="Bedroom"><?php echo $BedroomText; ?></button>
+  </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT Bedroom
+      FROM `lights`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "Bedroom State: ".$row['Bedroom'] . "<br/>To change please click the button."; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
     </div>
   </div>
   <div id="g2-6" class="g2-style">
     <div>
-    ***************
-          <div><p style="font-size: medium;">Bathroom</p></div>
+    <form method="POST" action="">
+    <button type="submit" name="Bathroom"><?php echo $BathroomText; ?></button>
+  </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT Bathroom
+      FROM `lights`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "Bathroom State: ".$row['Bathroom'] . "<br/>To change please click the button."; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
     </div>
   </div>
 </div>
@@ -700,15 +983,38 @@ if ($connection->connect_error) {
       <form method="POST" action="">
     <button type="submit" name="oven"><?php echo $ovenButtonText; ?></button>
   </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT State
+      FROM `oven`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='l-echo'> Oven Status: ".$row['State'] . "<br/>To change please click the button.<br /></div>"; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
       </div>
       <div class="g1-style" id="g">
-        <div class="alarm-style" id="g3">
-          <p>
-            "Oven will be turned on <br />
-            with the selections <br />
-            you clicked"
-          </p>
-        </div>
         <div class="g1-style" id="g4">
           <!-- In this section consumer can change the program of the oven  -->
           <select name="programs" id="programs">
@@ -744,6 +1050,36 @@ if ($connection->connect_error) {
       <form method="POST" action="">
     <button type="submit" name="Thermostat"><?php echo $thermostatButtonText; ?></button>
   </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT State
+      FROM `thermostat`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='l-echo'> Thermostat Status: ".$row['State'] . "<br/>To change please click the button.<br /></div>"; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
       </div>
       <div class="g1-style" id="g">
         <div class="alarm-style" id="g3">
@@ -766,9 +1102,36 @@ if ($connection->connect_error) {
               </select>
         </div>
         <div class="g1-style" id="g5">
-          <!-- In this section user can see the water level -->
-              <p>Water Level</p>
-              <p>98 CM</p>
+        <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT WaterLevel
+      FROM `thermostat`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "Water Pressure : ".$row['WaterLevel'] . " bar<br/>"; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
         </div>
       </div>`;
         } else if (page === "Vacuum") {
@@ -779,11 +1142,70 @@ if ($connection->connect_error) {
       <form method="POST" action="">
     <button type="submit" name="vacuumcleaner"><?php echo $vacuumCleanerButtonText; ?></button>
   </form>
+  <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT State
+      FROM `vacuumcleaner`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "<div class='l-echo'> Vacuum Cleaner Status: ".$row['State'] . "<br/>To change please click the button.<br /></div>"; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
           </div>
       <div class="g1-style" id="g">
         <div class="g1-style" id="g3">
           <!-- In this section consumer can see the charge of the vacuum -->
-              <p>Charge: 78%</p>
+          <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT Charge
+      FROM `vacuumcleaner`
+      WHERE DeviceID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+ 
+      echo "Charge : ".$row['Charge'] . "%<br/>"; 
+
+      }
+      // close
+      $connection->close(); 
+      ?>
         </div>
         <div class="g1-style" id="g4">
           <select name="programs" id="programs">
