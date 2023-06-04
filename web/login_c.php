@@ -51,6 +51,13 @@ header#header.producer {
   width: 100%;
   left: 0%;
 }
+.banner {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(rgba(168, 186, 179, 0.75),rgba(0,0,0,0.75)),url(background.jpg);
+  background-size: cover;
+  background-position: center;
+}
 li {
   display: inline;
   list-style: none;
@@ -92,13 +99,6 @@ header#header.producer a#signinp {
   top: 10px;
 }
 
-.gradient-custom-3 {
-
-background: #84fab0;
-background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
-
-background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
-}
 .gradient-custom-4 {
 background: #84fab0;
 
@@ -109,6 +109,7 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
 
     
 </style>
+<div class="banner">
 <header class="producer" id="header">
       <ul>
         <li>
@@ -174,6 +175,7 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
         </div>
       </div>
     </div>
+  </div>
   </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
