@@ -86,7 +86,7 @@ header#header.producer a#signinc {
 header#header.producer a#signinp {
   position: absolute;
   right: 370px;
-  border: 1px solid rgba(89, 237, 200, 0.907);
+  border: 1px solid rgba(200, 237, 200, 0.907);
   background-color: rgba(89, 237, 200, 0.907);
   border-radius: 20px;
   top: 10px;
