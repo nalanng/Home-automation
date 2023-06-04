@@ -51,6 +51,48 @@ header#header.producer {
   width: 100%;
   left: 0%;
 }
+@media(max-width :900px){
+  header#header.producer {
+  border-bottom: 1px solid rgba(89, 237, 200, 0.4);
+  width: 100%;
+  left: 0%;
+  height: 70px;
+}
+  header#header.producer a {
+  text-decoration: none;
+  font-size: large;
+  color: black;
+  padding: 8px;
+}
+header#header.producer a#logo {
+  padding-left: 0;
+  font-size: large;
+}
+header#header.producer a#signup {
+  position: absolute;
+  right: 30px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
+header#header.producer a#signinc {
+  position: absolute;
+  right: 150px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
+header#header.producer a#signinp {
+  position: absolute;
+  right: 370px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
+}
 li {
   display: inline;
   list-style: none;
@@ -86,7 +128,7 @@ header#header.producer a#signinc {
 header#header.producer a#signinp {
   position: absolute;
   right: 370px;
-  border: 1px solid rgba(200, 237, 200, 0.907);
+  border: 1px solid rgba(89, 237, 200, 0.907);
   background-color: rgba(89, 237, 200, 0.907);
   border-radius: 20px;
   top: 10px;
