@@ -274,7 +274,7 @@ if ($connection->connect_error) {
         var contentDiv;
         if (page === "Home") {
           contentDiv = document.getElementById("home");
-          contentDiv.innerHTML = `contentDiv.innerHTML = `
+          contentDiv.innerHTML = `
           <div class="datetime-container">
             <h3 id="time"></h3>
             <h3 id="date"></h3>
