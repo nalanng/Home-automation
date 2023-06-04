@@ -66,6 +66,19 @@ h1#g1.g1-style {
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(143, 211, 244, 0.5);
   }
+  #alarm-p {
+    font-size: 35px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(143, 211, 244, 0.5);
+  }
+  #vacuum-p {
+    font-size: 35px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(143, 211, 244, 0.5);
+  }
+
 div#consumption-p.content{
   padding: 20px;
 }
@@ -348,8 +361,55 @@ if ($connection->connect_error) {
                     }
                 }
             }
-        });
+        }); 
+        
+        <?php
+// database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql1 = "SELECT LivingRoom,Kitchen,Bedroom,Bathroom
+      FROM `lights`
+      WHERE DeviceID=1"; 
       
+      $result1 = mysqli_query($connection, $sql1); 
+
+      if (mysqli_num_rows($result1) > 0) { 
+      $row1 = mysqli_fetch_assoc($result1);
+      }
+      
+      $state1=$row1['LivingRoom'];
+      $state2=$row1['Kitchen'];
+      $state3=$row1['Bedroom'];
+      $state4=$row1['Bathroom']; 
+      if($state1=="On") {
+        $sql3 = "UPDATE `consumption` SET LightCons=LightCons*1.03";
+        mysqli_query($connection, $sql3);
+      }
+      if($state2=="On") {
+        $sql4 = "UPDATE `consumption` SET LightCons=LightCons*1.03";
+        mysqli_query($connection, $sql4);
+      } 
+      if($state3=="On") {
+        $sql5 = "UPDATE `consumption` SET LightCons=LightCons*1.03";
+        mysqli_query($connection, $sql5);
+      }
+      if($state4=="On") {
+        $sql6 = "UPDATE `consumption` SET LightCons=LightCons*1.03";
+        mysqli_query($connection, $sql6);
+      }
+        // close
+    $connection->close();
+?>
 
       function updateDateTime() {
         var currentDate = new Date(); // the current time and date
@@ -600,7 +660,45 @@ if ($connection->connect_error) {
       `;
         } else if (page === "Alarm") {
           contentDiv = document.getElementById("alarm");
-          contentDiv.innerHTML = "b";
+          contentDiv.innerHTML = `
+          <?php
+// Database Connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT *
+              FROM `alarm` 
+              WHERE ConsumptionID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+
+      }
+    
+      ?>
+      <h1 class="g1-style" id="g1">ALARM SYSTEM</h1>
+      <div class="g1-style" id="g2">
+      <p id="alarm-p">The alarm syatem is <?php echo $row['State'] ?> </p>
+      </div>
+      <div class="g1-style" id="g">
+        <div class="g1-style" id="g3">
+        <p id="alarm-p">The door is <?php echo $row['DoorState'] ?> </p>
+            </button>        
+        </div>
+      </div>
+      `;
         } else if (page === "Blinds") {
           contentDiv = document.getElementById("blinds");
           contentDiv.innerHTML = `
@@ -756,14 +854,55 @@ if ($connection->connect_error) {
       </div>`;
         } else if (page === "Vacuum") {
           contentDiv = document.getElementById("vacuum");
-          contentDiv.innerHTML = "f";
+          contentDiv.innerHTML = `
+          <?php
+// Database Connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web-home-automation";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Connection control
+if ($connection->connect_error) { 
+  die("Database connection failed: " .
+      $connection->connect_error); } 
+      // Take data using sql query 
+      $sql = "SELECT *
+              FROM `vacuumcleaner` 
+              WHERE ConsumptionID=1"; 
+      
+      $result = mysqli_query($connection, $sql); 
+
+      if (mysqli_num_rows($result) > 0) { 
+
+      $row = mysqli_fetch_assoc($result);
+
+      }
+    
+      ?>          
+      <h1 class="g1-style" id="g1">VACUUM CLEANER</h1>
+      <div class="g1-style" id="g2">
+      <p id="vacuum-p">The vaccum cleaner is "<?php echo $row['State'] ?>"</p>
+      </div>
+      <div class="g1-style" id="g">
+        <div class="g1-style" id="g3">
+          <!-- In this section consumer can see the charge of the vacuum -->
+              <p id="vacuum-p"> Charge: <?php echo $row['Charge'] ?> </p>
+        </div>
+        <div class="g1-style" id="g4">
+        <p id="vacuum-p">Selected program is "<?php echo $row['Program'] ?>" </p>
+        </div>
+      </div>
+      `;
         } else {
           contentDiv = document.getElementById("consumption-p");
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">CONSUMPTION</h1>
       <div id="consumption-text">
       <?php
-// Veritabanı bağlantısı
+// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -826,3 +965,5 @@ if ($connection->connect_error) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
   </body>
     </php>
+
+    
