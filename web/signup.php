@@ -146,9 +146,9 @@ header#header.producer a#signinp {
 <header class="producer" id="header">
       <ul>
         <li>
-          <a href="#" id="logo">SNautomation</a>
+          <a href="homepage.html" id="logo">SNautomation</a>
         </li>
-        li><a href="signup.php" id="signup">Sign Up</a></li>
+        <a href="signup.php" id="signup">Sign Up</a></li>
         <li><a href="login_c.php" id="signinc">Sign In As Consumer</a></li>
         <li><a href="login_p.php" id="signinp">Sign In As Producer</a></li>
       </ul>

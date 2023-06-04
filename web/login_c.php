@@ -113,7 +113,7 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
 <header class="producer" id="header">
       <ul>
         <li>
-          <a href="#" id="logo">SNautomation</a>
+          <a href="homepage.html" id="logo">SNautomation</a>
         </li>
         <li><a href="signup.php" id="signup">Sign Up</a></li>
         <li><a href="login_c.php" id="signinc">Sign In As Consumer</a></li>
