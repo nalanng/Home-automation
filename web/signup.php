@@ -116,7 +116,30 @@ background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 
 
 background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
 }
-
+header#header.producer a#signup {
+  position: absolute;
+  right: 30px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
+header#header.producer a#signinc {
+  position: absolute;
+  right: 150px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
+header#header.producer a#signinp {
+  position: absolute;
+  right: 370px;
+  border: 1px solid rgba(89, 237, 200, 0.907);
+  background-color: rgba(89, 237, 200, 0.907);
+  border-radius: 20px;
+  top: 10px;
+}
     
 </style>
 <div class="banner">
@@ -125,7 +148,9 @@ background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244
         <li>
           <a href="#" id="logo">SNautomation</a>
         </li>
-        <li><a href="#" id="signOut">Sign Out</a></li>
+        li><a href="signup.php" id="signup">Sign Up</a></li>
+        <li><a href="login_c.php" id="signinc">Sign In As Consumer</a></li>
+        <li><a href="login_p.php" id="signinp">Sign In As Producer</a></li>
       </ul>
     </header>
 <body>
