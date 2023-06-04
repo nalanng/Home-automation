@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="consumer.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     </head>
 <style>
 @media(min-width :900px){
@@ -220,6 +222,89 @@ if ($connection->connect_error) {
       $connection->close(); 
 ?>
 
+<?php
+
+
+// Cihazların durumlarını güncelleyen fonksiyon
+function updateDeviceState($tableName, $deviceID, &$state, &$buttonText) {
+
+  $host = "localhost";
+$db = "web-home-automation";
+$user = "root";
+$password = "";
+
+$baglanti = new mysqli($host, $user, $password, $db);
+
+if ($baglanti->connect_error) {
+  die("MySQL bağlantı hatası: " . $baglanti->connect_error);
+}
+
+  $query = "SELECT state FROM $tableName WHERE DeviceID = $deviceID";
+  $result = $baglanti->query($query);
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $state = $row["state"];
+  } else {
+    $state = "Off";
+  }
+
+  if ($state === "On") {
+    $buttonText = "TURN OFF";
+  } else {
+    $buttonText = "TURN ON";
+  }
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($state === "On") {
+      $newState = "Off";
+    } else {
+      $newState = "On";
+    }
+
+    $updateQuery = "UPDATE $tableName SET state='$newState' WHERE DeviceID = $deviceID";
+    if ($baglanti->query($updateQuery) === TRUE) {
+      $state = $newState;
+      if ($state === "On") {
+        $buttonText = "TURN OFF";
+      } else {
+        $buttonText = "TURN ON";
+      }
+    } else {
+      echo "Durum güncelleme hatası: " . $baglanti->error;
+    }
+  }
+}
+
+// Air Conditioner
+$airConditionerState = "";
+$airConditionerButtonText = "";
+updateDeviceState("airconditioner", 1, $airConditionerState, $airConditionerButtonText);
+
+// Alarm
+$alarmState = "";
+$alarmButtonText = "";
+updateDeviceState("alarm", 1, $alarmState, $alarmButtonText);
+
+// Oven
+$ovenState = "";
+$ovenButtonText = "";
+updateDeviceState("oven", 1, $ovenState, $ovenButtonText);
+
+// Thermostat
+$thermostatState = "";
+$thermostatButtonText = "";
+updateDeviceState("thermostat", 1, $thermostatState, $thermostatButtonText);
+
+// Vacuum Cleaner
+$vacuumCleanerState = "";
+$vacuumCleanerButtonText = "";
+updateDeviceState("vacuumcleaner", 1, $vacuumCleanerState, $vacuumCleanerButtonText);
+
+?>
+
+
+
   var airCons = <?php echo $row['AirCons']; ?>;
   var alarmCons = <?php echo $row['AlarmCons']; ?>;
   var lightCons = <?php echo $row['LightCons']; ?>;
@@ -242,7 +327,6 @@ if ($connection->connect_error) {
     <div class="content" id="consumption-p"></div>
 
 <script>
-
       var currentContent = null;
 
       function loadContent(page) {
@@ -531,7 +615,9 @@ if ($connection->connect_error) {
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">AIR CONDITIONER</h1>
       <div class="g1-style" id="g2">
-        <button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button>
+      <form method="POST" action="">
+    <button type="submit" name="airConditioner"><?php echo $airConditionerButtonText; ?></button>
+  </form>
       </div>
       <div class="g1-style" id="g">
         <div class="g1-style" id="g3">
@@ -560,8 +646,9 @@ if ($connection->connect_error) {
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">ALARM SYSTEM</h1>
       <div class="g1-style" id="g2">
-        <button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button>
-      </div>
+      <form method="POST" action="">
+    <button type="submit" name="alarm"><?php echo $alarmButtonText; ?></button>
+  </form>     </div>
       <div class="g1-style" id="g">
         <div class="g1-style" id="g3">
           <p id="mode">The door is locked</p>
@@ -580,26 +667,26 @@ if ($connection->connect_error) {
 <div id="g2-">
   <div id="g2-3" class="g2-style">
     <div>
-      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
-      <div><p style="font-size: medium;">Living Room</p></div>
+    ***************
+          <div><p style="font-size: medium;">Living Room</p></div>
     </div>
   </div>
   <div id="g2-4" class="g2-style">
     <div>
-      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
-      <div><p style="font-size: medium;">Kitchen</p></div>
+    ***************
+          <div><p style="font-size: medium;">Kitchen</p></div>
     </div>
   </div>
   <div id="g2-5" class="g2-style">
     <div>
-      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
-      <div><p style="font-size: medium;">Bedroom</p></div>
+    ***************
+          <div><p style="font-size: medium;">Bedroom</p></div>
     </div>
   </div>
   <div id="g2-6" class="g2-style">
     <div>
-      <div><button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button></div>
-      <div><p style="font-size: medium;">Bathroom</p></div>
+    ***************
+          <div><p style="font-size: medium;">Bathroom</p></div>
     </div>
   </div>
 </div>
@@ -610,13 +697,9 @@ if ($connection->connect_error) {
           contentDiv.innerHTML = `
           <h1 class="g1-style" id="g1">OVEN</h1>
       <div class="g1-style" id="g2">
-        <button
-          id="onoffbutton"
-          onclick="turnOff(this),toggleBtn1()"
-          style="font-size: xx-large"
-        >
-          TURN ON
-        </button>
+      <form method="POST" action="">
+    <button type="submit" name="oven"><?php echo $ovenButtonText; ?></button>
+  </form>
       </div>
       <div class="g1-style" id="g">
         <div class="alarm-style" id="g3">
@@ -658,13 +741,9 @@ if ($connection->connect_error) {
           contentDiv.innerHTML = `
           <h1 class="g1-style" id="g1">THERMOSTAT</h1>
       <div class="g1-style" id="g2">
-        <button
-          id="onoffbutton"
-          onclick="turnOff(this),toggleBtn1()"
-          style="font-size: xx-large"
-        >
-          TURN ON
-        </button>
+      <form method="POST" action="">
+    <button type="submit" name="Thermostat"><?php echo $thermostatButtonText; ?></button>
+  </form>
       </div>
       <div class="g1-style" id="g">
         <div class="alarm-style" id="g3">
@@ -697,8 +776,10 @@ if ($connection->connect_error) {
           contentDiv.innerHTML = `
       <h1 class="g1-style" id="g1">VACUUM CLEANER</h1>
       <div class="g1-style" id="g2">
-        <button id="onoffbutton" onclick="turnOff(this),toggleBtn1()" style="font-size: xx-large">TURN ON</button>
-      </div>
+      <form method="POST" action="">
+    <button type="submit" name="vacuumcleaner"><?php echo $vacuumCleanerButtonText; ?></button>
+  </form>
+          </div>
       <div class="g1-style" id="g">
         <div class="g1-style" id="g3">
           <!-- In this section consumer can see the charge of the vacuum -->
@@ -781,7 +862,7 @@ if ($connection->connect_error) {
         contentDiv.style.display = "block";
         currentContent = contentDiv;
       }
-      loadContent("Home");
+      loadContent('Home')
       // Here we get our variables by their id's to use in the functions
       var btn1 = document.getElementById("onoffbutton");
       var btn2 = document.getElementById("button");
