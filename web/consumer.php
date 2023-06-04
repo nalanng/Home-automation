@@ -374,8 +374,8 @@ if ($baglanti->connect_error) {
 // Living Room
 $LivingRoomState = "";
 $livingRoomText = "";
-if (isset($_POST['livingRoom'])) {
-  updateLightsState("livingRoom", $LivingRoomState, $livingRoomText);
+if (isset($_POST['livingroom'])) {
+  updateLightsState("livingroom", $LivingRoomState, $livingRoomText);
 }
 
 // Kitchen
@@ -755,17 +755,44 @@ if ($connection->connect_error) {
           <button id="buttonminus" onclick="minus(degree)" style="font-size: larger">-</button>
         </div>
         <div class="g1-style" id="g4">
-          <select name="programs" id="programs">
-            <option value="none" selected disabled hidden>Select a program</option>
-            <option value="program1">Dry Mode</option>
-            <option value="program2">Auto Mode</option>
-            <option value="program3">Fan Mode</option>
-            <option value="program4">Turbo Mode</option>
-          </select>
-        </div>
-        <div class="g1-style" id="g5">
-          <p id="mode">Winter mode is active</p>
-          <button id="button" onclick="activate(button),toggleBtn2()">Activate summer mode</button>
+        <?php
+          $host = "localhost";
+          $db = "web-home-automation";
+          $user = "root";
+          $password = "";
+
+          $baglanti = new mysqli($host, $user, $password, $db);
+
+          if ($baglanti->connect_error) {
+            die("MySQL bağlantı hatası: " . $baglanti->connect_error);
+          }
+
+          if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Seçilen programı al
+            $selectedProgram = $_POST['programs'];
+
+            // Veritabanında güncelleme yap
+            $updateQuery = "UPDATE airconditioner SET program='$selectedProgram' WHERE DeviceID = 1";
+
+            if ($baglanti->query($updateQuery) === TRUE) {
+              echo "";
+            } else {
+              echo "Hata: " . $baglanti->error;
+            }
+          }
+        ?>
+        <form method="POST" action="">
+        <select name="programs" id="programs">
+          <option value="none" selected disabled hidden>Select a program</option>
+          <option value="Dry">Dry Mode</option>
+          <option value="Auto">Auto Mode</option>
+          <option value="Fan">Fan Mode</option>
+          <option value="Turbo">Turbo Mode</option>
+          <option value="Winter">Winter Mode</option>
+          <option value="Summer">Summer Mode</option>
+        </select>
+        <button type="submit">Update</button>
+      </form>
         </div>
       </div>
       `;
@@ -827,7 +854,7 @@ if ($connection->connect_error) {
   <div id="g2-3" class="g2-style">
     <div>
     <form method="POST" action="">
-    <button type="submit" name="LivingRoom"><?php echo $livingRoomText; ?></button>
+    <button type="submit" name="livingroom"><?php echo $livingRoomText; ?></button>
   </form>
   <?php
 // database connection
@@ -975,71 +1002,105 @@ if ($connection->connect_error) {
 </div>
 
   `;
-        } else if (page === "Oven") {
+        }else if (page === "Oven") {
           contentDiv = document.getElementById("oven");
           contentDiv.innerHTML = `
           <h1 class="g1-style" id="g1">OVEN</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-    <button type="submit" name="oven"><?php echo $ovenButtonText; ?></button>
-  </form>
-  <?php
-// database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "web-home-automation";
+        <button type="submit" name="oven"><?php echo $ovenButtonText; ?>
+        </button>
+      </form>
+          <?php
+        // database connection
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "web-home-automation";
 
-$connection = new mysqli($servername, $username, $password, $dbname);
+        $connection = new mysqli($servername, $username, $password, $dbname);
 
-// Connection control
-if ($connection->connect_error) { 
-  die("Database connection failed: " .
-      $connection->connect_error); } 
-      // Take data using sql query 
-      $sql = "SELECT State
-      FROM `oven`
-      WHERE DeviceID=1"; 
-      
-      $result = mysqli_query($connection, $sql); 
+        // Connection control
+        if ($connection->connect_error) { 
+          die("Database connection failed: " .
+              $connection->connect_error); } 
+              // Take data using sql query 
+              $sql = "SELECT State
+              FROM `oven`
+              WHERE DeviceID=1"; 
+              
+              $result = mysqli_query($connection, $sql); 
 
-      if (mysqli_num_rows($result) > 0) { 
+              if (mysqli_num_rows($result) > 0) { 
 
-      $row = mysqli_fetch_assoc($result);
- 
-      echo "<div class='l-echo'> Oven Status: ".$row['State'] . "<br/>To change please click the button.<br /></div>"; 
+              $row = mysqli_fetch_assoc($result);
+        
+              echo "<div class='l-echo'> Oven Status: ".$row['State'] . "<br/>To change please click the button.<br /></div>"; 
 
-      }
-      // close
-      $connection->close(); 
+              }
+              // close
+              $connection->close(); 
+              ?>
+              </div>
+
+              <div class="g1-style" id="g">
+              <?php
+        $host = "localhost";
+        $db = "web-home-automation";
+        $user = "root";
+        $password = "";
+
+        $baglanti = new mysqli($host, $user, $password, $db);
+
+        if ($baglanti->connect_error) {
+            die("ERROR: " . $baglanti->connect_error);
+        }
+            if (isset($_POST["programUpdate"])) {
+                $selectedProgram = $_POST["programs"];
+                
+                $updateQuery = "UPDATE oven SET program='$selectedProgram' WHERE DeviceID = 1";
+                if ($baglanti->query($updateQuery) === TRUE) {
+                    echo "";
+                } else {
+                    echo "ERROR: " . $baglanti->error;
+                }
+            }
+
+            if (isset($_POST["degreeUpdate"])) {
+                $selectedDegree = $_POST["degree"];
+                
+                $updateQuery = "UPDATE oven SET degree=$selectedDegree WHERE DeviceID = 1";
+                if ($baglanti->query($updateQuery) === TRUE) {
+                    echo "";
+                } else {
+                    echo "ERROR: " . $baglanti->error;
+                }
+            }
+
       ?>
-      </div>
-      <div class="g1-style" id="g">
-        <div class="g1-style" id="g4">
-          <!-- In this section consumer can change the program of the oven  -->
-          <select name="programs" id="programs">
-            <option value="none" selected disabled hidden>
-              Select a program
-            </option>
-            <option value="program1">Lower </option>
-            <option value="program2">Upper </option>
-            <option value="program3">Upper and lower </option>
-            <option value="program4">Fan with lower </option>
-            <option value="program5">Fan oven</option>
-            <option value="program6">Grill</option>
-          </select>
+                <div class="g1-style" id="g4">
+                  <!-- In this section consumer can change the program of the oven  -->
+                  <form method="POST" action="">
+                   <select name="programs" id="programs">
+                    <option value="none" selected disabled hidden>Select Program</option>
+                    <option value="Lower">Lower</option>
+                    <option value="Upper">Upper</option>
+                    <option value="Upper and Lower">Upper and lower</option>
+                    <option value="Fan with Lower">Fan with lower</option>
+                    <option value="Fan Oven">Fan oven</option>
+                    <option value="Grill">Grill</option>
+                  </select>
+                   <button type="submit" name="programUpdate">Update Program</button>
+                 </form>
         </div>
         <div class="g1-style" id="g5">
-          <select name="degree" id="degree">
-            <option value="none" selected disabled hidden>
-              Select a degree
-            </option>
-            <option value="degree1">75°C</option>
-            <option value="degree2">100°C</option>
-            <option value="degree3">150°C</option>
-            <option value="degree4">200°C</option>
-            <option value="degree5">250°C</option>
-          </select>
+            <form method="POST" action="">
+                <label for="degree">Degree:</label>
+                <input type="number" name="degree" id="degree" min="0" max="300">
+                <button type="submit" name="degreeUpdate">Update Degree</button>
+            </form>
+
+
         </div>
       </div>`;
         } else if (page === "Thermostat") {
@@ -1048,7 +1109,7 @@ if ($connection->connect_error) {
           <h1 class="g1-style" id="g1">THERMOSTAT</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-    <button type="submit" name="Thermostat"><?php echo $thermostatButtonText; ?></button>
+    <button type="submit" name="thermostat"><?php echo $thermostatButtonText; ?></button>
   </form>
   <?php
 // database connection
@@ -1092,14 +1153,43 @@ if ($connection->connect_error) {
         </div>
         <div class="g1-style" id="g4">
           <!-- In this section we can change the mode of the thermostat -->
-              <select name="programs" id="programs">
+          <?php
+          $host = "localhost";
+          $db = "web-home-automation";
+          $user = "root";
+          $password = "";
+
+          $baglanti = new mysqli($host, $user, $password, $db);
+
+          if ($baglanti->connect_error) {
+            die("MySQL bağlantı hatası: " . $baglanti->connect_error);
+          }
+
+          if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Seçilen programı al
+            $selectedProgram = $_POST['programs'];
+
+            // Veritabanında güncelleme yap
+            $updateQuery = "UPDATE thermostat SET Mode ='$selectedProgram' WHERE DeviceID = 1";
+
+            if ($baglanti->query($updateQuery) === TRUE) {
+              echo "";
+            } else {
+              echo "Hata: " . $baglanti->error;
+            }
+          }
+        ?>
+        <form method="POST" action="">
+        <select name="programs" id="programs">
                 <option value="none" selected disabled hidden>
                   Select a mode
                 </option>
-                <option value="program1">Auto</option>
-                <option value="program2">AI</option>
-                <option value="program3">Service</option>
+                <option value="Auto">Auto</option>
+                <option value="AI">AI</option>
+                <option value="Service">Service</option>
               </select>
+        <button type="submit">Update</button>
+      </form>
         </div>
         <div class="g1-style" id="g5">
         <?php
@@ -1208,6 +1298,7 @@ if ($connection->connect_error) {
       ?>
         </div>
         <div class="g1-style" id="g4">
+        
           <select name="programs" id="programs">
                 <!-- In this section consumer can change the program of the vacuum -->
                 <option value="none" selected disabled hidden>
@@ -1285,30 +1376,7 @@ if ($connection->connect_error) {
         currentContent = contentDiv;
       }
       loadContent('Home')
-      // Here we get our variables by their id's to use in the functions
-      var btn1 = document.getElementById("onoffbutton");
-      var btn2 = document.getElementById("button");
-
-      // This function simply changes the text of the button when clicked on it
-      function turnOff(button) {
-        if (button.innerHTML == "TURN OFF") {
-          button.innerHTML = "TURN ON";
-        } else {
-          button.innerHTML = "TURN OFF";
-        }
-      }
-
-      // Toggle functions are used to change the background colors when clicked on them
-      function toggleBtn1() {
-        btn1.classList.toggle("active1");
-      }
-
-      function toggleBtn2() {
-        btn2.classList.toggle("active2");
-      }
-
-      // This function, same as the turnOff, will activate summer or winter mode
-      // by changing their innerHTML
+     
       function activate(id) {
         if (id.innerHTML == "Activate winter mode") {
           id.innerHTML = "Activate summer mode";
