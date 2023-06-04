@@ -103,11 +103,9 @@ div#home.content{
     a#signOut{
       transform: translateY(40px);
     }
-    div#menu{
-      transform: translateY(120px);
-    }
+
     .datetime-container{
-      transform: translate(-40px,-370px);
+      transform: translate(-40px,10px);
 
     }
     div#home.content{
@@ -116,13 +114,59 @@ div#home.content{
     .temp-container{
       transform: translate(-53px,-100px);
     }
+    .content{
+      text-align: center;
+    }
     .lightStatus{
       top: -250px;
       left: 17%;
     }
+    #airconditioner.content{
+      transform: translateY(60px);
+      font-size: larger;
+    }
+    #airconditioner.content h1{
+      transform: translateY(-60px);
+    }
+    #alarm.content{
+      transform: translateY(60px);
+      font-size: larger;
+    }
+    #alarm.content h1{
+      transform: translateY(-60px);
+    }
+    #blinds.content{
+      font-size: larger;
+    }
+    #oven.content{
+      font-size: larger;
+    }
+    #thermostat.content{
+      font-size: larger;
+    }
+    #vacuum.content{
+      transform: translateY(60px);
+      font-size: larger;
+    }
+    #vacuum.content h1{
+      transform: translateY(-60px);
+    }
+    #consumption-p.content{
+      transform: translate(30px,350px);
+      font-size: medium;
+    }
 }
 #empty{
   height: 100px;
+}
+#menu{
+  z-index: 1;
+}
+button[type="submit"] {
+  height: 30px;
+  width: 70px;
+  background-color: rgb(168, 169, 222);
+  border-radius: 5px;
 }
 </style>
   <body>
@@ -132,7 +176,7 @@ div#home.content{
           <a href="#" id="logo">SNautomation</a>
         </li>
         <li><a href="#" id="home-p" onclick="loadContent('Home')">Home </a></li>
-        <li><a href="homepage.php" id="signOut">Sign Out</a></li>
+        <li><a href="homepage.html" id="signOut">Sign Out</a></li>
       </ul>
     </header>
 
@@ -714,7 +758,7 @@ if ($connection->connect_error) {
       <h1 class="g1-style" id="g1">AIR CONDITIONER</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-    <button type="submit" name="airconditioner"><?php echo $airConditionerButtonText; ?></button>
+    <button type="submit" name="airconditioner">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -749,10 +793,49 @@ if ($connection->connect_error) {
       </div>
       <div class="g1-style" id="g">
         <div class="g1-style" id="g3">
-          <p id="degree">26</p>
-          <p id="santi">°C</p>
-          <button id="buttonplus" onclick="plus(degree)" style="font-size: larger">+</button>
-          <button id="buttonminus" onclick="minus(degree)" style="font-size: larger">-</button>
+      <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "web-home-automation";
+
+        $connection = new mysqli($servername, $username, $password, $dbname);
+
+        if ($connection->connect_error) {
+            die("Database connection failed: " . $connection->connect_error);
+        }
+
+        // Dereceyi güncelle
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST["air_degree"])) {
+                $newDegree = $_POST["degree"];
+
+                // Veritabanında dereceyi güncelle
+                $updateQuery = "UPDATE airconditioner SET degree='$newDegree' WHERE DeviceID=1";
+                if ($connection->query($updateQuery) === TRUE) {
+                    echo "Degree updated successfully";
+                } else {
+                    echo "Error updating degree: " . $connection->error;
+                }
+            }
+        }
+
+        // Veritabanından dereceyi al
+        $sql = "SELECT degree FROM airconditioner WHERE DeviceID=1";
+        $result = $connection->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $currentDegree = $row['degree'];
+            echo  $currentDegree . "°C<br/>";
+        }
+
+        $connection->close();
+        ?>
+        <form method="POST" action="">
+            <input type="number" name="degree" id="degree" value="<?php echo $currentDegree; ?>" min="0" max="100" step="1">
+            <button type="submit" name="air_degree">Update</button>
+        </form>
         </div>
         <div class="g1-style" id="g4">
         <?php
@@ -802,7 +885,7 @@ if ($connection->connect_error) {
       <h1 class="g1-style" id="g1">ALARM SYSTEM</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-    <button type="submit" name="alarm"><?php echo $alarmButtonText; ?></button>
+    <button type="submit" name="alarm">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -854,7 +937,7 @@ if ($connection->connect_error) {
   <div id="g2-3" class="g2-style">
     <div>
     <form method="POST" action="">
-    <button type="submit" name="livingroom"><?php echo $livingRoomText; ?></button>
+    <button type="submit" name="livingroom">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -891,7 +974,7 @@ if ($connection->connect_error) {
   <div id="g2-4" class="g2-style">
     <div>
     <form method="POST" action="">
-    <button type="submit" name="Kitchen"><?php echo $KitchenText; ?></button>
+    <button type="submit" name="Kitchen">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -928,7 +1011,7 @@ if ($connection->connect_error) {
   <div id="g2-5" class="g2-style">
     <div>
     <form method="POST" action="">
-    <button type="submit" name="Bedroom"><?php echo $BedroomText; ?></button>
+    <button type="submit" name="Bedroom">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -965,7 +1048,7 @@ if ($connection->connect_error) {
   <div id="g2-6" class="g2-style">
     <div>
     <form method="POST" action="">
-    <button type="submit" name="Bathroom"><?php echo $BathroomText; ?></button>
+    <button type="submit" name="Bathroom">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -1008,7 +1091,7 @@ if ($connection->connect_error) {
           <h1 class="g1-style" id="g1">OVEN</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-        <button type="submit" name="oven"><?php echo $ovenButtonText; ?>
+        <button type="submit" name="oven">ON/OFF
         </button>
       </form>
           <?php
@@ -1090,14 +1173,14 @@ if ($connection->connect_error) {
                     <option value="Fan Oven">Fan oven</option>
                     <option value="Grill">Grill</option>
                   </select>
-                   <button type="submit" name="programUpdate">Update Program</button>
+                   <button type="submit" name="programUpdate">Update</button>
                  </form>
         </div>
         <div class="g1-style" id="g5">
             <form method="POST" action="">
                 <label for="degree">Degree:</label>
-                <input type="number" name="degree" id="degree" min="0" max="300">
-                <button type="submit" name="degreeUpdate">Update Degree</button>
+                <input type="number" name="degree" id="degree" min="0" max="250">
+                <button type="submit" name="degreeUpdate">Update</button>
             </form>
 
 
@@ -1109,7 +1192,7 @@ if ($connection->connect_error) {
           <h1 class="g1-style" id="g1">THERMOSTAT</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-    <button type="submit" name="thermostat"><?php echo $thermostatButtonText; ?></button>
+    <button type="submit" name="thermostat">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -1145,11 +1228,7 @@ if ($connection->connect_error) {
       <div class="g1-style" id="g">
         <div class="alarm-style" id="g3">
           <!-- In this section we can change the temperature of the thermostat
-              with plus and minus buttons -->
-              <p id="degree">26</p>
-              <p id="santi">°C</p>
-              <button id="buttonplus" onclick="plus(degree)">+</button>
-              <button id="buttonminus" onclick="minus(degree)">-</button>
+          
         </div>
         <div class="g1-style" id="g4">
           <!-- In this section we can change the mode of the thermostat -->
@@ -1230,7 +1309,7 @@ if ($connection->connect_error) {
       <h1 class="g1-style" id="g1">VACUUM CLEANER</h1>
       <div class="g1-style" id="g2">
       <form method="POST" action="">
-    <button type="submit" name="vacuumcleaner"><?php echo $vacuumCleanerButtonText; ?></button>
+    <button type="submit" name="vacuumcleaner">ON/OFF</button>
   </form>
   <?php
 // database connection
@@ -1341,21 +1420,21 @@ if ($connection->connect_error) {
 
       $row = mysqli_fetch_assoc($result);
  
-      echo "<div class='echo'> Air Condition Consumption: ".$row['AirCons'] . "<br/><br /></div>"; 
+      echo "<div class='echo'> Air Condition Consumption: ".$row['AirCons'] . " Watt<br/><br /></div>"; 
 
-      echo "<div class='echo'> Alarm System Consumption: ".$row['AlarmCons'] ."<br /><br /></div>"; 
+      echo "<div class='echo'> Alarm System Consumption: ".$row['AlarmCons'] ." Watt<br /><br /></div>"; 
 
-      echo "<div class='echo'> Lights Consumption: ".$row['LightCons'] ."<br /><br /></div>";
+      echo "<div class='echo'> Lights Consumption: ".$row['LightCons'] ." Watt<br /><br /></div>";
       
-      echo "<div class='echo'>Thermostat Consumption: ".$row['ThermCons'] ."<br /><br /></div>";
+      echo "<div class='echo'>Thermostat Consumption: ".$row['ThermCons'] ."Watt<br /><br /></div>";
 
-      echo "<div class='echo'> Oven Consumption: ".$row['OvenCons'] ."<br /><br /></div>";
+      echo "<div class='echo'> Oven Consumption: ".$row['OvenCons'] ." Watt<br /><br /></div>";
 
-      echo "<div class='echo'> Vacuum Cleaning Consumption: ".$row['VacuumCons'] ."<br /><br /></div>";
+      echo "<div class='echo'> Vacuum Cleaning Consumption: ".$row['VacuumCons'] ." Watt<br /><br /></div>";
 
       //total concumption
       $total = $row['AirCons'] + $row['AlarmCons'] + $row['LightCons'] + $row['ThermCons'] + $row['OvenCons'] + $row['VacuumCons'];
-  echo "<div class='echo' id='total'> Total Consumption: " . $total . "</div>";
+  echo "<div class='echo' id='total'> Total Consumption: " . $total . " Watt</div>";
     } else {
          echo "Sonuç bulunamadı."; } 
       
@@ -1376,36 +1455,6 @@ if ($connection->connect_error) {
         currentContent = contentDiv;
       }
       loadContent('Home')
-     
-      function activate(id) {
-        if (id.innerHTML == "Activate winter mode") {
-          id.innerHTML = "Activate summer mode";
-          x = document.getElementById("mode").innerHTML =
-            "Winter mode is active";
-        } else if (id.innerHTML == "Activate summer mode") {
-          id.innerHTML = "Activate winter mode";
-          x = document.getElementById("mode").innerHTML =
-            "Summer mode is active";
-        } else if (id.innerHTML == "Unlocked the Door") {
-          id.innerHTML = "Locked the Door";
-          document.getElementById("mode").innerHTML = "The door is unlocked !!";
-        } else {
-          id.innerHTML = "Unlocked the Door";
-          document.getElementById("mode").innerHTML = "The door is locked";
-        }
-      }
-      // In this function, we provide the changes on the temperature
-      // by clicking plus and minus buttons
-      function plus(id) {
-        var a = parseInt(id.innerHTML);
-        a += 1;
-        id.innerHTML = a;
-      }
-      function minus(id) {
-        var a = parseInt(id.innerHTML);
-        a -= 1;
-        id.innerHTML = a;
-      }
     </script>
   </body>
     </php>
